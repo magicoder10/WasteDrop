@@ -1,0 +1,22 @@
+#level-1-screen > #wall {
+    position : absolute;
+    left     : 0;
+    top      : 0;
+}
+
+#level-1-screen > #ground {
+    position : absolute;
+    left     : 0;
+    top      : 374px;
+}
+
+#level-1-screen > #assembly-line-close-side {
+    position : absolute;
+    left     : 0;
+    z-index: 4;
+}
+
+#level-1-screen > #assembly-line-far-side {
+    position : absolute;
+    left     : 0;
+}

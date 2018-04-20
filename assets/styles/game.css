@@ -1,0 +1,28 @@
+
+#current-screen-container, #next-screen-container {
+    position    : absolute;
+    left        : 50%;
+    top         : 50%;
+    margin-top  : -300px;
+    margin-left : -400px;
+    width       : 800px;
+    height      : 600px;
+    transition  : all 600ms cubic-bezier(1, 0, 0, 1);
+}
+
+#next-screen-container {
+    opacity : 0;
+}
+
+#current-screen-container {
+    z-index : 1;
+}
+
+#loading-screen, #start-screen, #level-1-screen {
+    position         : absolute;
+    top              : 0;
+    left             : 0;
+    right            : 0;
+    bottom           : 0;
+    background-color : black;
+}

@@ -1,0 +1,26 @@
+#loading-screen > #progress-bar {
+    position         : absolute;
+    height           : 10px;
+    top              : 50%;
+    margin-top       : -5px;
+    left             : 100px;
+    right            : 100px;
+    background-color : #FFFFFF;
+}
+
+#loading-screen > #progress-bar > #progress {
+    transition       : all 600ms cubic-bezier(1, 0, 0, 1);
+    background-color : #3F7762;
+    height           : 10px;
+}
+
+#loading-screen > #loading-label {
+    position    : absolute;
+    top         : 50%;
+    margin-top  : 30px;
+    left        : 0;
+    right       : 0;
+    font-size   : 30px;
+    font-family : "Wawati TC", sans-serif;
+    color       : white;
+}

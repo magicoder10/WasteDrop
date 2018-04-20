@@ -3,235 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Waste Drop</title>
-    <style>
-        body {
-            background-color : black;
-            padding          : 0;
-            margin           : 0;
-            text-align       : center;
-        }
 
-        #game {
-            position    : absolute;
-            left        : 50%;
-            top         : 50%;
-            margin-top  : -300px;
-            margin-left : -400px;
-            width: 800px;
-            height: 600px;
-            background-color: white;
-        }
+    <link rel="stylesheet" href="assets/styles/screens/1.level.screen.css"/>
+    <link rel="stylesheet" href="assets/styles/screens/loading.screen.css"/>
+    <link rel="stylesheet" href="assets/styles/screens/start.screen.css"/>
+    <link rel="stylesheet" href="assets/styles/game.css"/>
+    <link rel="stylesheet" href="assets/styles/index.css"/>
 
-        #ui-layer, #game-layer {
-            position    : absolute;
-            left        : 0;
-            top         : 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        #ui-layer {
-            z-index: 1;
-        }
-    </style>
+    <script src="assets/scripts/screens/1.level.screen.js" type="application/javascript"></script>
+    <script src="assets/scripts/screens/loading.screen.js" type="application/javascript"></script>
+    <script src="assets/scripts/screens/start.screen.js" type="application/javascript"></script>
+    <script src="assets/scripts/game.js" type="application/javascript"></script>
+    <script src="assets/scripts/index.js" type="application/javascript"></script>
 </head>
 <body>
-    <div id="game">
-        <div id="ui-layer"></div>
-        <canvas id="game-layer" width="800" height="600">
-        </canvas>
+<div id="game-container">
+    <div id="current-screen-container">
     </div>
-    <!--<canvas id="game-canvas" width="800" height="600">-->
-</canvas>
-<script type="application/javascript">
-    const Screen = {
-        LOADING: 0,
-        START: 1,
-        LEVEL: 2,
-        HIGH_SCORE: 3,
-        CREDIT: 4
-    };
-
-    class ProgressBar {
-        constructor() {
-            this._backgroundColor = 'white';
-            this._progressColor = '#629A7D';
-
-            this.x = 0;
-            this.y = 0;
-            this.width = 0;
-            this.height = 0;
-
-            this._progress = 0.0;
-        }
-
-        updateProgress(progress) {
-            this._progress = progress;
-        }
-
-        draw(ctx) {
-            ctx.fillStyle = this._backgroundColor;
-            ctx.fillRect(this.x, this.y, this.width, this.height);
-            ctx.fillStyle = this._progressColor;
-            ctx.fillRect(this.x, this.y, this.width * this._progress, this.height);
-        }
-    }
-
-    class Label {
-        constructor() {
-            this.font = 'Arial';
-            this.text = '';
-            this.size = 16;
-            this.x = 0;
-            this.y = 0;
-            this.color = 'black';
-        }
-
-        draw(ctx) {
-            ctx.font = `${this.size}px ${this.font}`;
-            ctx.fillStyle = this.color;
-            ctx.fillText(this.text, this.x, this.y);
-        }
-    }
-
-    class LoadingScreen {
-        constructor() {
-            this._progressBar = new ProgressBar();
-            this._loadingLabel = new Label();
-
-            this.backgroundColor = 'black';
-            this.x = 0;
-            this.y = 0;
-            this.width = 0;
-            this.height = 0;
-            this.progress = 0.0;
-        }
-
-        draw(ctx) {
-            ctx.fillStyle = this.backgroundColor;
-            ctx.fillRect(this.x, this.y, this.width, this.height);
-
-            this._progressBar.x = this.x + 100;
-            this._progressBar.y = this.y + 295;
-            this._progressBar.width = this.width - 200;
-            this._progressBar.height = 10;
-
-            this._progressBar.updateProgress(this.progress);
-            this._progressBar.draw(ctx);
-
-            this._loadingLabel.x = this.x + 322;
-            this._loadingLabel.y = this.y + 380;
-            this._loadingLabel.font = 'Wawati SC';
-            this._loadingLabel.size = 32;
-            this._loadingLabel.color = 'white';
-
-            this._loadingLabel.text = 'Loading...';
-            this._loadingLabel.draw(ctx);
-        }
-    }
-
-    class StartScreen {
-        constructor() {
-            this.backgroundColor = 'black';
-            this.x = 0;
-            this.y = 0;
-            this.width = 0;
-            this.height = 0;
-        }
-
-        draw(ctx, imageAssets){
-            ctx.drawImage(imageAssets['wall'], this.x, this.y);
-            ctx.drawImage(imageAssets['ground'], this.x, this.y + 374);
-            ctx.drawImage(imageAssets['title'], this.x + 133, this.y + 77);
-
-//            ctx.drawImage(assets['start-btn'], 200, 362);
-//            ctx.drawImage(assets['credit-btn'], 200, 462);
-        }
-    }
-
-    class GameEngine {
-        constructor(canvasID) {
-            this._canvas = document.querySelector(`#${canvasID}`);
-            this._ctx = this._canvas.getContext('2d');
-            this._currentScreen = Screen.LOADING;
-
-            this._backgroundColor = 'black';
-
-            this._totalAssets = 5;
-            this._assetsLoaded = 0;
-
-            this._loadingScreen = new LoadingScreen();
-            this._loadingScreen.x = 0;
-            this._loadingScreen.y = 0;
-            this._loadingScreen.width = this._canvas.width;
-            this._loadingScreen.height = this._canvas.height;
-            this._loadingScreen.backgroundColor = 'black';
-        }
-
-        _loadImageAssets(path, assetNames, extension, onProgress) {
-            return new Promise((onComplete, onFail) => {
-                let assets = {};
-
-                let count = 0;
-
-                assetNames.forEach(assetName => {
-                    let image = new Image();
-                    image.onload = () => {
-                        assets[assetName] = image;
-                        count++;
-                        onProgress();
-                        if (count === assetNames.length)
-                            onComplete(assets);
-                    };
-                    image.src = `${path}/${assetName}.${extension}`;
-                });
-            });
-        }
-
-        _update() {
-            this._ctx.fillStyle = this._backgroundColor;
-            this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
-            switch (this._currentScreen) {
-                case Screen.LOADING:
-                    this._loadingScreen.progress = this._assetsLoaded / this._totalAssets;
-                    this._loadingScreen.draw(this._ctx);
-                    break;
-                case Screen.START:
-                    this._startScreen.draw(this._ctx, this._imageAssets);
-                    break;
-            }
-            requestAnimationFrame(this._update.bind(this));
-        }
-
-        run() {
-            requestAnimationFrame(this._update.bind(this));
-            this._loadImageAssets('assets/images', ['wall', 'ground', 'title', 'start-btn', 'credit-btn'], 'svg', () => {
-                this._assetsLoaded++;
-            })
-                .then(assets => {
-                    this._imageAssets = assets;
-                    this._currentScreen = Screen.START;
-
-                    this._startScreen = new StartScreen();
-                }, () => {
-                });
-        }
-    }
-
-
-    window.onload = () => {
-
-//        function switchToFirstScreen(assets) {
-//            ctx.drawImage(assets['wall'], 0, 0);
-//            ctx.drawImage(assets['title'], 133, 77);
-//            ctx.drawImage(assets['ground'], 0, 374);
-//            ctx.drawImage(assets['start-btn'], 200, 362);
-//            ctx.drawImage(assets['credit-btn'], 200, 462);
-//        }
-
-        let gameEngine = new GameEngine('game-layer');
-        gameEngine.run();
-    };
-</script>
+    <div id="next-screen-container">
+    </div>
+</div>
 </body>
 </html>

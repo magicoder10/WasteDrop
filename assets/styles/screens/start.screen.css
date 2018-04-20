@@ -1,0 +1,35 @@
+#start-screen > #wall {
+    position : absolute;
+    left     : 0;
+    top      : 0;
+}
+
+#start-screen > #ground {
+    position : absolute;
+    left     : 0;
+    top      : 374px;
+}
+
+#start-screen > #title {
+    position    : absolute;
+    left        : 50%;
+    margin-left : -244px;
+    top         : 78px;
+}
+
+#start-screen > #buttons {
+    position    : absolute;
+    width       : 398px;
+    top         : 362px;
+    left        : 50%;
+    margin-left : -199px;
+}
+
+#start-screen > #buttons > #start-button, #start-screen > #buttons > #credit-button {
+    height : 88px;
+    cursor : pointer;
+}
+
+#start-screen > #buttons > #credit-button {
+    margin-top : 20px;
+}

@@ -3,32 +3,32 @@ class Level1Screen {
         this._container = container;
         this._container.innerHTML = `
                 <div id="level-1-screen">
-                    <img id="wall"/>
-                    <img id="ground"/>
+                    <img id="wall" draggable="false"/>
+                    <img id="ground" draggable="false"/>
                     
-                    <div id="info-labels">
-                        <div id="points-label">Points:&nbsp;<span id="points">100</span></div>
-                        <div id="time-remaining-label"><span id="time-remaining">120</span>&nbsp;seconds&nbsp;left</div>
+                    <div id="info-labels" draggable="false">
+                        <div id="points-label">Points:&nbsp;<span id="points"></span></div>
+                        <div id="time-remaining-label"><span id="time-remaining"></span>&nbsp;seconds&nbsp;left</div>
                     </div>
                     
                     <ul id="cans">
                         <li>
-                            <img id="can-paper">
+                            <img id="can-paper" draggable="false">
                         </li>
                         <li>
-                            <img id="can-plastic">
+                            <img id="can-plastic" draggable="false">
                         </li>
                         <li>
-                            <img id="can-metal">
+                            <img id="can-metal" draggable="false">
                         </li>
                         <li>
-                            <img id="can-trash">
+                            <img id="can-trash" draggable="false">
                         </li>
                     </ul>
                     
-                    <img id="assembly-line-far-side"/>
-                    <img id="assembly-line-close-side"/>
-                    <img id="assembly-line-rods">
+                    <img id="assembly-line-far-side" draggable="false"/>
+                    <img id="assembly-line-close-side" draggable="false"/>
+                    <img id="assembly-line-rods" draggable="false">
                 </div>
             `;
 
@@ -43,6 +43,9 @@ class Level1Screen {
         this._canMetalEl = this._container.querySelector('#can-metal');
         this._canTrashEl = this._container.querySelector('#can-trash');
 
+        this._pointsEl = this._container.querySelector('#points');
+        this._timeRemainingEl = this._container.querySelector('#time-remaining');
+
 
         this._wallEl.src = imageAssets['wall'].src;
         this._groundEl.src = imageAssets['ground'].src;
@@ -55,6 +58,14 @@ class Level1Screen {
         this._canPlasticEl.src = imageAssets['can-plastic'].src;
         this._canMetalEl.src = imageAssets['can-metal'].src;
         this._canTrashEl.src = imageAssets['can-trash'].src;
+    }
+
+    updateTimeRemaining(timeRemaining) {
+        this._timeRemainingEl.textContent = timeRemaining;
+    }
+
+    updatePoints(points) {
+        this._pointsEl.textContent = points;
     }
 
     show(onShown) {

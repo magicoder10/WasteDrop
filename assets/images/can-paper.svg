@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="137px" height="163px" viewBox="0 0 137 163" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>can ( paper )</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <ellipse id="path-1" cx="62.6" cy="86.5276243" rx="52.4" ry="52.4723757"></ellipse>
+    </defs>
+    <g id="Screens" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Level1" transform="translate(-53.000000, -129.000000)">
+            <g id="cans" transform="translate(53.000000, 129.000000)">
+                <g id="can-(-paper-)">
+                    <g id="shadow">
+                        <ellipse id="container" fill="#6D8F7D" cx="69.5" cy="97.5" rx="62.5" ry="65.5"></ellipse>
+                        <ellipse id="Combined-Shape" fill="#577F6A" cx="68.3412148" cy="96.890921" rx="59" ry="58.8356724"></ellipse>
+                        <path d="M7.34106351,2.0606878 L128.847468,0.726959265 C131.706633,0.695575256 134.190694,2.68615683 134.783124,5.48344807 C135.857793,10.5577432 136.395128,15.3749825 136.395128,19.935166 C136.395128,24.2678001 136.182313,28.7935345 135.756683,33.5123692 L135.75669,33.5123699 C135.477771,36.604662 132.885788,38.9733758 129.780942,38.9733758 L69.5778059,38.9733758 C33.9859748,39.8394481 14.3951493,40.2367386 10.8053293,40.1652474 C8.89760809,40.1272551 7.20628207,39.8711886 5.73135122,39.3970479 L5.73135197,39.3970456 C3.68276834,38.7384948 2.1437101,37.0333346 1.6978268,34.9282047 C0.661787685,30.0367971 0.219162756,25.0296211 0.369952013,19.9066767 C0.496754557,15.5986617 0.863257789,11.3618602 1.46946171,7.19627208 L1.46945794,7.19627153 C1.8950028,4.2720994 4.38626755,2.09312151 7.34106351,2.0606878 Z" id="bg-(-label-)" fill="#6D8F7D"></path>
+                    </g>
+                    <g id="paper" transform="translate(4.000000, 4.000000)">
+                        <g id="container">
+                            <use fill="#197081" fill-rule="evenodd" xlink:href="#path-1"></use>
+                            <ellipse stroke="#12D6FF" stroke-width="8" cx="62.6" cy="86.5276243" rx="56.4" ry="56.4723757"></ellipse>
+                        </g>
+                        <g id="label">
+                            <rect id="bg-(-label-)" fill="#12D6FF" x="0" y="0" width="128" height="32" rx="6"></rect>
+                            <text id="Paper" font-family="Avenir-Heavy, Avenir" font-size="20.8" font-weight="600" fill="#FFFCF6">
+                                <tspan x="35.4936" y="23">Paper</tspan>
+                            </text>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

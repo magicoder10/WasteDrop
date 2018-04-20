@@ -30,3 +30,36 @@
     bottom: 90px;
     z-index  : 2;
 }
+
+#level-1-screen > #cans {
+    position: absolute;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    top :130px;
+    left: 50px;
+    right: 50px;
+}
+
+#level-1-screen > #info-labels {
+    position: absolute;
+    left: 60px;
+    right: 60px;
+    top: 40px;
+    color: white;
+    font-size: 24px;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+}
+
+#level-1-screen > #info-labels > #points-label {
+    position: absolute;
+    left: 0;
+}
+
+#level-1-screen > #info-labels > #time-remaining-label {
+    position: absolute;
+    right: 0;
+}

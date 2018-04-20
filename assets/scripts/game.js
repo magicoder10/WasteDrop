@@ -30,6 +30,10 @@ class WasteDropGame {
         this._gameContainer = document.querySelector('#game-container');
         this._currentScreenContainer = document.querySelector('#current-screen-container');
         this._nextScreenContainer = document.querySelector('#next-screen-container');
+
+
+        this._points = 0;
+        this._timeRemaining = 0;
     }
 
     _loadImageAssets(path, assetNames, extension, onProgress) {
@@ -107,6 +111,12 @@ class WasteDropGame {
                         this._startScreen.hide();
                         this._level1Screen = new Level1Screen(this._nextScreenContainer, this._imageAssets, this._audioAssets);
 
+                        this._points = 0;
+                        this._timeRemaining = 10;
+
+                        this._level1Screen.updatePoints(this._points);
+                        this._level1Screen.updateTimeRemaining(this._timeRemaining);
+
                         setTimeout(()=>{
                             this._level1Screen.show(()=>{
                                 this.swapScreens();
@@ -114,6 +124,13 @@ class WasteDropGame {
                                 this._audioAssets['level-1-background'].loop = true;
                                 this._audioAssets['level-1-background'].volume = 0.2;
                                 this._audioAssets['level-1-background'].play();
+
+
+                                let timer = setInterval(()=>{
+                                    this._level1Screen.updateTimeRemaining(--this._timeRemaining);
+                                    if(this._timeRemaining === 0)
+                                        clearInterval(timer);
+                                }, 1000);
                             });
                         }, 400);
                     };

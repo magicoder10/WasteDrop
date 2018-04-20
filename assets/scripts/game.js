@@ -9,7 +9,8 @@ class WasteDropGame {
             'start-button-hover',
             'credit-button-hover',
             'assembly-line-close-side',
-            'assembly-line-far-side'
+            'assembly-line-far-side',
+            'assembly-line-rods'
         ];
 
         this._audioAssetNames = [

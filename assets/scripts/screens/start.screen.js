@@ -41,9 +41,6 @@ class StartScreen {
         };
 
         this._startButtonEl.onclick = () => {
-            audioAssets['button-click'].volume = 0.3;
-            audioAssets['button-click'].play();
-
             this.onStartButtonClick();
         };
 

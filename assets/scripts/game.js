@@ -19,7 +19,6 @@ class WasteDropGame {
 
         this._audioAssetNames = [
             'button-hover',
-            'button-click',
             'introduction',
             'level-1-background'
         ];
@@ -106,6 +105,7 @@ class WasteDropGame {
                     this._startScreen = new StartScreen(this._nextScreenContainer, this._imageAssets, this._audioAssets);
 
                     this._startScreen.onStartButtonClick = () => {
+                        this._audioAssets['introduction'].volume = 0;
                         this._audioAssets['introduction'].pause();
 
                         this._startScreen.hide();

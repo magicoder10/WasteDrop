@@ -20,51 +20,83 @@
 #level-1-screen > #assembly-line-far-side {
     position : absolute;
     left     : 0;
-    bottom: 140px;
-    z-index: 1;
+    bottom   : 140px;
+    z-index  : 1;
 }
 
 #level-1-screen > #assembly-line-rods {
     position : absolute;
-    left: 0;
-    bottom: 90px;
+    left     : 0;
+    bottom   : 90px;
     z-index  : 2;
 }
 
 #level-1-screen > #cans {
-    position: absolute;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: space-between;
-    top :130px;
-    left: 50px;
-    right: 50px;
+    position        : absolute;
+    list-style      : none;
+    margin          : 0;
+    padding         : 0;
+    display         : flex;
+    justify-content : space-between;
+    top             : 130px;
+    left            : 50px;
+    right           : 50px;
 }
 
 #level-1-screen > #info-labels {
-    position: absolute;
-    left: 60px;
-    right: 60px;
-    top: 40px;
-    color: white;
-    font-size: 24px;
-    font-family: 'Arial', sans-serif;
-    font-weight: bold;
+    position    : absolute;
+    left        : 60px;
+    right       : 60px;
+    top         : 40px;
+    color       : white;
+    font-size   : 24px;
+    font-family : 'Arial', sans-serif;
+    font-weight : bold;
 }
 
 #level-1-screen > #info-labels > #points-label {
-    position: absolute;
-    left: 0;
+    position : absolute;
+    left     : 0;
 }
 
 #level-1-screen > #info-labels > #time-remaining-label {
-    position: absolute;
-    right: 0;
+    position : absolute;
+    right    : 0;
+}
+
+@keyframes bumpy {
+    0% {
+        transform : rotate(0);
+    }
+
+    30% {
+        transform : rotate(-2deg);
+    }
+
+    70% {
+        transform : rotate(-2deg);
+    }
+
+    100% {
+        transform : rotate(0);
+    }
 }
 
 .character {
-    position: absolute;
-    z-index: 3;
+    position                  : absolute;
+    z-index                   : 3;
+    max-width                 : 100px;
+    max-height                : 110px;
+
+    animation-iteration-count : infinite;
+    animation-duration        : 0.1s;
+    animation-name            : bumpy;
+
+    transition: margin-top 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55)
+}
+
+.character:hover {
+    animation: none;
+    cursor: pointer;
+    margin-bottom: 10px;
 }

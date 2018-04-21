@@ -1,14 +1,14 @@
 class Character {
-    constructor(left, bottom, width, height, speed, normalImage) {
+    constructor(left, bottom, speed, normalImage, hoverImage) {
         this.left = left;
         this.bottom = bottom;
-        this.width = width;
-        this.height = height;
         this.speed = speed;
         this.removed = false;
 
+        this.moving = true;
 
-        this._dragging = false;
+
+        this.dragging = false;
 
         this._el = document.createElement('img');
         this._el.src = normalImage.src;
@@ -16,8 +16,16 @@ class Character {
 
         this._el.style.left = `${left}px`;
         this._el.style.bottom = `${bottom}px`;
-        this._el.style.width = `${width}px`;
-        this._el.style.height = `${height}px`;
+
+        this._el.addEventListener('mouseover', ()=>{
+            this.moving = false;
+            this._el.src = hoverImage.src;
+        });
+
+        this._el.addEventListener('mouseout', ()=>{
+            this.moving = true;
+            this._el.src = normalImage.src;
+        });
     }
 
     addTo(container) {
@@ -29,14 +37,12 @@ class Character {
     }
 
     drag() {
-        this._dragging = true;
-    }
-
-    isDragging() {
-        return this._dragging;
+        this.dragging = true;
     }
 
     act(timeElapsed) {
+        if(!this.moving) return;
+
         this.left -= this.speed * timeElapsed / 1000;
         this._el.style.left = `${this.left}px`;
     }
@@ -104,16 +110,26 @@ class Level1Screen {
         this._canMetalEl.src = imageAssets['can-metal'].src;
         this._canTrashEl.src = imageAssets['can-trash'].src;
 
-        this._characters = [
-            new Character(800, 124, 75, 111, 100, imageAssets['character-cup'])
-        ];
-
-
-        this._characters[0].addTo(this._screen);
+        this._characters = [];
 
         this._lastUpdateAt = null;
 
         requestAnimationFrame(this._moveCharacters.bind(this));
+    }
+
+    addCharacter(imageAssets, type, speed) {
+        let rodHeight = 114;
+
+        let character = new Character(
+            this._container.offsetWidth,
+            rodHeight,
+            speed,
+            imageAssets[`character-${type}`],
+            imageAssets[`character-${type}-hover`]
+        );
+        this._characters.push(character);
+        character.addTo(this._screen);
+
     }
 
     _moveCharacters(timestamp) {
@@ -123,7 +139,7 @@ class Level1Screen {
 
             let timeElapsed = timestamp - this._lastUpdateAt;
 
-            this._characters.forEach(character => {
+            this._characters.filter(character => !character.dragging).forEach(character => {
                 if (character.left < -character.width) {
                     character.removeFrom(this._screen);
                     character.removed = true;

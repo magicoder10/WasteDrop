@@ -16,7 +16,9 @@ class WasteDropGame {
             'can-metal',
             'can-paper',
             'character-cup',
-            'character-plastic-bag'
+            'character-cup-hover',
+            'character-plastic-bag',
+            'character-plastic-bag-hover'
         ];
 
         this._audioAssetNames = [
@@ -92,11 +94,34 @@ class WasteDropGame {
         this._audioAssets['level-1-background'].pause();
     }
 
+    _createCharacters() {
+        let characterTypes = ['cup', 'plastic-bag'];
+        let delay = 10000;
+
+        let characterTypeIndex = Math.floor(Math.random() * characterTypes.length);
+        this._level1Screen.addCharacter(this._imageAssets, characterTypes[characterTypeIndex], 50);
+
+        setInterval(()=>{
+            let characterTypeIndex = Math.floor(Math.random() * characterTypes.length);
+            this._level1Screen.addCharacter(this._imageAssets, characterTypes[characterTypeIndex], 50);
+        }, delay);
+    }
+
+    _startCountingDown(timeRemaining) {
+        let timer = setInterval(()=>{
+            this._level1Screen.updateTimeRemaining(--timeRemaining);
+            if(timeRemaining === 0) {
+                this._gameOver();
+                clearInterval(timer);
+            }
+        }, 1000);
+    }
+
     run() {
         this._loadingScreen = new LoadingScreen(this._currentScreenContainer);
         this._loadingScreen.updateProgress(0);
 
-        this._loadImageAssets('assets/images', this._imageAssetNames, 'svg', () => {
+        this._loadImageAssets('assets/images', this._imageAssetNames, 'png', () => {
             this._assetsLoaded++;
             this._loadingScreen.updateProgress(this._assetsLoaded / this._totalAssets)
         })
@@ -118,7 +143,7 @@ class WasteDropGame {
                         this._level1Screen = new Level1Screen(this._nextScreenContainer, this._imageAssets, this._audioAssets);
 
                         this._points = 0;
-                        this._timeRemaining = 20;
+                        this._timeRemaining = 120;
 
                         this._level1Screen.updatePoints(this._points);
                         this._level1Screen.updateTimeRemaining(this._timeRemaining);
@@ -131,14 +156,9 @@ class WasteDropGame {
                                 this._audioAssets['level-1-background'].volume = 0.2;
                                 this._audioAssets['level-1-background'].play();
 
+                                this._startCountingDown(this._timeRemaining);
+                                this._createCharacters();
 
-                                let timer = setInterval(()=>{
-                                    this._level1Screen.updateTimeRemaining(--this._timeRemaining);
-                                    if(this._timeRemaining === 0) {
-                                        this._gameOver();
-                                        clearInterval(timer);
-                                    }
-                                }, 1000);
                             });
                         }, 400);
                     };

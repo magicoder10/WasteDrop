@@ -3,9 +3,9 @@ class StartScreen {
         this._container = container;
         this._container.innerHTML = `
                 <div id="start-screen">
-                    <img id="wall"/>
-                    <img id="ground"/>
-                    <img id="title"/>
+                    <img id="wall" draggable="false"/>
+                    <img id="ground" draggable="false"/>
+                    <img id="title" draggable="false"/>
 
                     <div id="buttons">
                         <div id="start-button"></div>

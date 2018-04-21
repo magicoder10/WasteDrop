@@ -63,3 +63,8 @@
     position: absolute;
     right: 0;
 }
+
+.character {
+    position: absolute;
+    z-index: 3;
+}

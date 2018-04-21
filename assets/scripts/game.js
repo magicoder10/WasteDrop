@@ -14,7 +14,9 @@ class WasteDropGame {
             'can-plastic',
             'can-trash',
             'can-metal',
-            'can-paper'
+            'can-paper',
+            'character-cup',
+            'character-plastic-bag'
         ];
 
         this._audioAssetNames = [
@@ -86,6 +88,10 @@ class WasteDropGame {
         this._nextScreenContainer = currentContainer;
     }
 
+    _gameOver() {
+        this._audioAssets['level-1-background'].pause();
+    }
+
     run() {
         this._loadingScreen = new LoadingScreen(this._currentScreenContainer);
         this._loadingScreen.updateProgress(0);
@@ -112,7 +118,7 @@ class WasteDropGame {
                         this._level1Screen = new Level1Screen(this._nextScreenContainer, this._imageAssets, this._audioAssets);
 
                         this._points = 0;
-                        this._timeRemaining = 10;
+                        this._timeRemaining = 20;
 
                         this._level1Screen.updatePoints(this._points);
                         this._level1Screen.updateTimeRemaining(this._timeRemaining);
@@ -128,8 +134,10 @@ class WasteDropGame {
 
                                 let timer = setInterval(()=>{
                                     this._level1Screen.updateTimeRemaining(--this._timeRemaining);
-                                    if(this._timeRemaining === 0)
+                                    if(this._timeRemaining === 0) {
+                                        this._gameOver();
                                         clearInterval(timer);
+                                    }
                                 }, 1000);
                             });
                         }, 400);

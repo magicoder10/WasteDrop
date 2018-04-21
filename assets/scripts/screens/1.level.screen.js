@@ -1,3 +1,47 @@
+class Character {
+    constructor(left, bottom, width, height, speed, normalImage) {
+        this.left = left;
+        this.bottom = bottom;
+        this.width = width;
+        this.height = height;
+        this.speed = speed;
+        this.removed = false;
+
+
+        this._dragging = false;
+
+        this._el = document.createElement('img');
+        this._el.src = normalImage.src;
+        this._el.setAttribute('class', 'character');
+
+        this._el.style.left = `${left}px`;
+        this._el.style.bottom = `${bottom}px`;
+        this._el.style.width = `${width}px`;
+        this._el.style.height = `${height}px`;
+    }
+
+    addTo(container) {
+        container.appendChild(this._el);
+    }
+
+    removeFrom(container) {
+        container.removeChild(this._el);
+    }
+
+    drag() {
+        this._dragging = true;
+    }
+
+    isDragging() {
+        return this._dragging;
+    }
+
+    act(timeElapsed) {
+        this.left -= this.speed * timeElapsed / 1000;
+        this._el.style.left = `${this.left}px`;
+    }
+}
+
 class Level1Screen {
     constructor(container, imageAssets, audioAssets) {
         this._container = container;
@@ -32,6 +76,7 @@ class Level1Screen {
                 </div>
             `;
 
+        this._screen = this._container.querySelector('#level-1-screen');
         this._wallEl = this._container.querySelector('#wall');
         this._groundEl = this._container.querySelector('#ground');
         this._assemblyLineFarSideEl = this._container.querySelector('#assembly-line-far-side');
@@ -58,6 +103,39 @@ class Level1Screen {
         this._canPlasticEl.src = imageAssets['can-plastic'].src;
         this._canMetalEl.src = imageAssets['can-metal'].src;
         this._canTrashEl.src = imageAssets['can-trash'].src;
+
+        this._characters = [
+            new Character(800, 124, 75, 111, 100, imageAssets['character-cup'])
+        ];
+
+
+        this._characters[0].addTo(this._screen);
+
+        this._lastUpdateAt = null;
+
+        requestAnimationFrame(this._moveCharacters.bind(this));
+    }
+
+    _moveCharacters(timestamp) {
+        if (!this._lastUpdateAt)
+            this._lastUpdateAt = timestamp;
+        else {
+
+            let timeElapsed = timestamp - this._lastUpdateAt;
+
+            this._characters.forEach(character => {
+                if (character.left < -character.width) {
+                    character.removeFrom(this._screen);
+                    character.removed = true;
+                } else character.act(timeElapsed);
+            });
+
+            this._characters = this._characters.filter(character => !character.removed);
+
+            this._lastUpdateAt = timestamp;
+        }
+
+        requestAnimationFrame(this._moveCharacters.bind(this));
     }
 
     updateTimeRemaining(timeRemaining) {

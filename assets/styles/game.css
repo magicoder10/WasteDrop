@@ -8,6 +8,7 @@
     width       : 800px;
     height      : 600px;
     transition  : all 600ms cubic-bezier(1, 0, 0, 1);
+    overflow: hidden;
 }
 
 #next-screen-container {

@@ -98,23 +98,38 @@ class WasteDropGame {
         this._audioAssets['level-1-background'].pause();
     }
 
+    _addRandomCharacter() {
+        let characterConfigs = [
+            {
+                name: 'cup',
+                category: 'paper'
+            },
+            {
+                name: 'plastic-bag',
+                category: 'plastic'
+            }
+        ];
+        let characterConfigIndex = Math.floor(Math.random() * characterConfigs.length);
+        let characterConfig = characterConfigs[characterConfigIndex];
+        this._level1Screen.addCharacter(this._imageAssets, characterConfig.name, characterConfig.category, 50,
+            (character, targetCan) => {
+                console.log(character.category, targetCan.name);
+            });
+    }
+
     _createCharacters() {
-        let characterTypes = ['cup', 'plastic-bag'];
         let delay = 10000;
+        this._addRandomCharacter();
 
-        let characterTypeIndex = Math.floor(Math.random() * characterTypes.length);
-        this._level1Screen.addCharacter(this._imageAssets, characterTypes[characterTypeIndex], 50);
-
-        setInterval(()=>{
-            let characterTypeIndex = Math.floor(Math.random() * characterTypes.length);
-            this._level1Screen.addCharacter(this._imageAssets, characterTypes[characterTypeIndex], 50);
+        setInterval(() => {
+            this._addRandomCharacter();
         }, delay);
     }
 
     _startCountingDown(timeRemaining) {
-        let timer = setInterval(()=>{
+        let timer = setInterval(() => {
             this._level1Screen.updateTimeRemaining(--timeRemaining);
-            if(timeRemaining === 0) {
+            if (timeRemaining === 0) {
                 this._gameOver();
                 clearInterval(timer);
             }
@@ -152,8 +167,8 @@ class WasteDropGame {
                         this._level1Screen.updatePoints(this._points);
                         this._level1Screen.updateTimeRemaining(this._timeRemaining);
 
-                        setTimeout(()=>{
-                            this._level1Screen.show(()=>{
+                        setTimeout(() => {
+                            this._level1Screen.show(() => {
                                 this.swapScreens();
 
                                 this._audioAssets['level-1-background'].loop = true;

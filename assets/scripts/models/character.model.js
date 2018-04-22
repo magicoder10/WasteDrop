@@ -1,5 +1,6 @@
 class Character {
-    constructor(left, bottom, speed, normalImage, hoverImage, onDragging, onDropping) {
+    constructor(category, left, bottom, speed, normalImage, hoverImage, onDragging, onDropping) {
+        this.category = category;
         this.left = left;
         this.top = 0;
         this.bottom = bottom;
@@ -39,11 +40,11 @@ class Character {
             onDragging(this);
         });
 
-        this._el.addEventListener('mouseup', () => {
+        this._el.addEventListener('mouseup', event => {
             this.dragging = false;
             this._release();
 
-            onDropping(this);
+            onDropping(event.x, event.y);
         });
     }
 

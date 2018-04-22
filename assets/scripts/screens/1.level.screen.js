@@ -119,18 +119,26 @@ class Level1Screen {
         return left > canLeft && top > canTop && left < canLeft + can.el.offsetWidth && top < canTop + can.el.offsetHeight
     }
 
-    addCharacter(imageAssets, type, speed) {
-
+    addCharacter(imageAssets, name, category, speed, onDropInsideCan) {
         let character = new Character(
+            category,
             this._container.offsetWidth,
             this._rodHeight,
             speed,
-            imageAssets[`character-${type}`],
-            imageAssets[`character-${type}-hover`],
+            imageAssets[`character-${name}`],
+            imageAssets[`character-${name}-hover`],
             (character) => {
                 this._characterDragging = character;
             },
-            () => {
+            (x, y) => {
+
+                let targetCans = this._cans.filter(can => this._isInside(x, y, can));
+
+                if(targetCans.length > 0) {
+                    let targetCan = targetCans[0];
+                    onDropInsideCan(this._characterDragging, targetCan);
+                }
+
                 this._cans.forEach(can => {
                     can.el.src = imageAssets[`can-${can.name}`].src;
                 });

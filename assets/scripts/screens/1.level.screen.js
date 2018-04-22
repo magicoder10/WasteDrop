@@ -26,6 +26,10 @@ class Character {
             this.moving = true;
             this._el.src = normalImage.src;
         });
+
+        this._el.addEventListener('dragstart', ()=>{
+           console.log('dragstart');
+        });
     }
 
     addTo(container) {

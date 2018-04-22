@@ -21,12 +21,14 @@ class Character {
         this._el.addEventListener('mouseover', () => {
             this._el.src = hoverImage.src;
 
+            this._el.style.cursor = 'pointer';
             this._el.style.animationName = 'none';
         });
 
         this._el.addEventListener('mouseout', () => {
             this._el.src = normalImage.src;
 
+            this._el.style.cursor = 'default';
             this._el.style.animationName = 'bumpy';
         });
 
@@ -41,10 +43,12 @@ class Character {
         });
     }
 
-    updateLocation(x, y) {
+    updateLocation(x, y, containerHeight) {
         this.left = x;
         this._el.style.left = `${this.left - this._el.offsetWidth / 2}px`;
-        this._el.style.top = `${y - this._el.offsetHeight / 2}px`;
+
+        if(y < containerHeight - this._el.offsetHeight)
+            this._el.style.top = `${y - this._el.offsetHeight / 2}px`;
     }
 
     addTo(container) {
@@ -61,6 +65,8 @@ class Character {
 
     _release() {
         this.releasing = true;
+        this._el.style.cursor = 'default';
+
         this._el.src = this._normalImage.src;
         this._el.style.marginTop = '0';
 
@@ -151,7 +157,7 @@ class Level1Screen {
         this._screen.addEventListener('mousemove', (event) => {
             this._characters.filter(character => character.dragging && !character.releasing)
                 .forEach(character => {
-                    character.updateLocation(event.x - this._container.offsetLeft, event.y - this._container.offsetTop);
+                    character.updateLocation(event.x - this._container.offsetLeft, event.y - this._container.offsetTop, this._container.offsetHeight - this._rodHeight);
                 });
         });
 

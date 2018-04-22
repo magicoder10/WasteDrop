@@ -1,5 +1,5 @@
 class Character {
-    constructor(left, bottom, speed, normalImage, hoverImage) {
+    constructor(left, bottom, speed, normalImage, hoverImage, onDragging, onDropping) {
         this.left = left;
         this.top = 0;
         this.bottom = bottom;
@@ -35,11 +35,15 @@ class Character {
         this._el.addEventListener('mousedown', () => {
             this.top = this._el.offsetTop;
             this.dragging = true;
+
+            onDragging(this);
         });
 
         this._el.addEventListener('mouseup', () => {
             this.dragging = false;
             this._release();
+
+            onDropping(this);
         });
     }
 
@@ -57,10 +61,6 @@ class Character {
 
     removeFrom(container) {
         container.removeChild(this._el);
-    }
-
-    drag() {
-        this.dragging = true;
     }
 
     _release() {
@@ -152,16 +152,6 @@ class Level1Screen {
             }
         ];
 
-        // this._cans.forEach(can => {
-        //     can.el.addEventListener('mouseover', () => {
-        //         can.el.src = imageAssets[`can-${can.name}-hover`].src;
-        //     });
-        //
-        //     can.el.addEventListener('mouseout', () => {
-        //         can.el.src = imageAssets[`can-${can.name}`].src;
-        //     });
-        // });
-
         this._pointsEl = this._container.querySelector('#points');
         this._timeRemainingEl = this._container.querySelector('#time-remaining');
 
@@ -185,27 +175,36 @@ class Level1Screen {
         this._rodHeight = 114;
 
         this._screen.addEventListener('mousemove', (event) => {
+            if (!this._characterDragging) return;
+
             let left = event.x - this._container.offsetLeft;
             let top = event.y - this._container.offsetTop;
             let availableHeight = this._container.offsetHeight - this._rodHeight;
 
-            this._characters.filter(character => character.dragging && !character.releasing)
-                .forEach(character => {
-                    character.updateLocation(left, top, availableHeight);
-                });
+            this._characterDragging.updateLocation(left, top, availableHeight);
 
             this._cans.forEach(can => {
-                let canLeft = can.el.offsetLeft + this._cansEl.offsetLeft;
-                let canTop = can.el.offsetTop + this._cansEl.offsetTop;
 
-                if (left > canLeft && top > canTop && left < canLeft + can.el.offsetWidth && top < canTop + can.el.offsetHeight)
+                if (this._isInside(event.x, event.y, can))
                     can.el.src = imageAssets[`can-${can.name}-hover`].src;
                 else
                     can.el.src = imageAssets[`can-${can.name}`].src;
             });
         });
 
+        this._characterDragging = null;
+
         requestAnimationFrame(this._moveCharacters.bind(this));
+    }
+
+    _isInside(x, y, can) {
+        let left = x - this._container.offsetLeft;
+        let top = y - this._container.offsetTop;
+
+        let canLeft = can.el.offsetLeft + this._cansEl.offsetLeft;
+        let canTop = can.el.offsetTop + this._cansEl.offsetTop;
+
+        return left > canLeft && top > canTop && left < canLeft + can.el.offsetWidth && top < canTop + can.el.offsetHeight
     }
 
     addCharacter(imageAssets, type, speed) {
@@ -215,7 +214,16 @@ class Level1Screen {
             this._rodHeight,
             speed,
             imageAssets[`character-${type}`],
-            imageAssets[`character-${type}-hover`]
+            imageAssets[`character-${type}-hover`],
+            (character) => {
+                this._characterDragging = character;
+            },
+            () => {
+                this._cans.forEach(can => {
+                    can.el.src = imageAssets[`can-${can.name}`].src;
+                });
+                this._characterDragging = null;
+            },
         );
         this._characters.push(character);
         character.addTo(this._screen);

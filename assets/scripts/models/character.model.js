@@ -1,11 +1,13 @@
 class Character {
-    constructor(category, left, bottom, speed, normalImage, hoverImage, onDragging, onDropping) {
+    constructor(category, points, left, bottom, speed, normalImage, hoverImage, onDragging, onDropping) {
         this.category = category;
         this.left = left;
         this.top = 0;
+        this.points = points;
         this.bottom = bottom;
         this.speed = speed;
         this.removed = false;
+        this.removing = false;
         this._normalImage = normalImage;
 
         this.dragging = false;
@@ -35,6 +37,7 @@ class Character {
 
         this._el.addEventListener('mousedown', () => {
             this.top = this._el.offsetTop;
+            console.log(this.top);
             this.dragging = true;
 
             onDragging(this);
@@ -42,9 +45,9 @@ class Character {
 
         this._el.addEventListener('mouseup', event => {
             this.dragging = false;
-            this._release();
-
-            onDropping(event.x, event.y);
+            onDropping(event.x, event.y, ()=>{
+                this.release();
+            });
         });
     }
 
@@ -60,11 +63,18 @@ class Character {
         container.appendChild(this._el);
     }
 
+    remove(onRemoved) {
+        this.removing = true;
+        $(this._el).animate({
+            opacity: 0,
+        }, 200, 'easeOutExpo', onRemoved);
+    }
+
     removeFrom(container) {
         container.removeChild(this._el);
     }
 
-    _release() {
+    release() {
         this.releasing = true;
         this._el.style.cursor = 'default';
 

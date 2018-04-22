@@ -119,9 +119,10 @@ class Level1Screen {
         return left > canLeft && top > canTop && left < canLeft + can.el.offsetWidth && top < canTop + can.el.offsetHeight
     }
 
-    addCharacter(imageAssets, name, category, speed, onDropInsideCan) {
+    addCharacter(imageAssets, name, category, points, speed, onDropInsideCan) {
         let character = new Character(
             category,
+            points,
             this._container.offsetWidth,
             this._rodHeight,
             speed,
@@ -130,14 +131,14 @@ class Level1Screen {
             (character) => {
                 this._characterDragging = character;
             },
-            (x, y) => {
+            (x, y, onReleaseCharacter) => {
 
                 let targetCans = this._cans.filter(can => this._isInside(x, y, can));
 
                 if(targetCans.length > 0) {
                     let targetCan = targetCans[0];
-                    onDropInsideCan(this._characterDragging, targetCan);
-                }
+                    onDropInsideCan(this._characterDragging, targetCan, onReleaseCharacter);
+                } else this._characterDragging.release();
 
                 this._cans.forEach(can => {
                     can.el.src = imageAssets[`can-${can.name}`].src;
@@ -157,7 +158,7 @@ class Level1Screen {
 
             let timeElapsed = timestamp - this._lastUpdateAt;
 
-            this._characters.filter(character => !character.dragging && !character.releasing)
+            this._characters.filter(character => !character.dragging && !character.releasing && !character.removing)
                 .forEach(character => {
                     if (character.left < -character.width) {
                         character.removeFrom(this._screen);

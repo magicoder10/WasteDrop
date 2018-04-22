@@ -63,21 +63,3 @@
     position : absolute;
     right    : 0;
 }
-
-@keyframes bumpy {
-    0% {
-        transform : rotate(0);
-    }
-
-    30% {
-        transform : rotate(-2deg);
-    }
-
-    70% {
-        transform : rotate(-2deg);
-    }
-
-    100% {
-        transform : rotate(0);
-    }
-}

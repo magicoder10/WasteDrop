@@ -102,23 +102,35 @@ class WasteDropGame {
         let characterConfigs = [
             {
                 name: 'cup',
-                category: 'paper'
+                category: 'paper',
+                points: 10
             },
             {
                 name: 'plastic-bag',
-                category: 'plastic'
+                category: 'plastic',
+                points: 15
             }
         ];
         let characterConfigIndex = Math.floor(Math.random() * characterConfigs.length);
         let characterConfig = characterConfigs[characterConfigIndex];
-        this._level1Screen.addCharacter(this._imageAssets, characterConfig.name, characterConfig.category, 50,
-            (character, targetCan) => {
-                console.log(character.category, targetCan.name);
+        this._level1Screen.addCharacter(this._imageAssets, characterConfig.name, characterConfig.category, characterConfig.points, 50,
+            (character, targetCan, onReleaseCharacter) => {
+                if(character.category !== targetCan.name) {
+                    onReleaseCharacter();
+                    return;
+                }
+
+                character.remove(()=>{
+
+                });
+
+                this._points += character.points;
+                this._level1Screen.updatePoints(this._points);
             });
     }
 
     _createCharacters() {
-        let delay = 10000;
+        let delay = 3000;
         this._addRandomCharacter();
 
         setInterval(() => {

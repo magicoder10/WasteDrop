@@ -1,35 +1,50 @@
 class Character {
     constructor(left, bottom, speed, normalImage, hoverImage) {
         this.left = left;
+        this.top = 0;
         this.bottom = bottom;
         this.speed = speed;
         this.removed = false;
-
-        this.moving = true;
-
+        this._normalImage = normalImage;
 
         this.dragging = false;
+        this.releasing = false;
 
         this._el = document.createElement('img');
         this._el.src = normalImage.src;
+        this._el.setAttribute('draggable', 'false');
         this._el.setAttribute('class', 'character');
 
         this._el.style.left = `${left}px`;
         this._el.style.bottom = `${bottom}px`;
 
-        this._el.addEventListener('mouseover', ()=>{
-            this.moving = false;
+        this._el.addEventListener('mouseover', () => {
             this._el.src = hoverImage.src;
+
+            this._el.style.animationName = 'none';
         });
 
-        this._el.addEventListener('mouseout', ()=>{
-            this.moving = true;
+        this._el.addEventListener('mouseout', () => {
             this._el.src = normalImage.src;
+
+            this._el.style.animationName = 'bumpy';
         });
 
-        this._el.addEventListener('dragstart', ()=>{
-           console.log('dragstart');
+        this._el.addEventListener('mousedown', () => {
+            this.top = this._el.offsetTop;
+            this.dragging = true;
         });
+
+        this._el.addEventListener('mouseup', () => {
+            this.dragging = false;
+            this._release();
+        });
+    }
+
+    updateLocation(x, y) {
+        this.left = x;
+        this._el.style.left = `${this.left - this._el.offsetWidth / 2}px`;
+        this._el.style.top = `${y - this._el.offsetHeight / 2}px`;
     }
 
     addTo(container) {
@@ -44,9 +59,22 @@ class Character {
         this.dragging = true;
     }
 
-    act(timeElapsed) {
-        if(!this.moving) return;
+    _release() {
+        this.releasing = true;
+        this._el.src = this._normalImage.src;
+        this._el.style.marginTop = '0';
 
+        this.left = this._el.offsetLeft;
+
+        $(this._el).animate({
+            top: this.top
+        }, 400, 'easeOutExpo', ()=>{
+            this._el.style.animationName = 'bumpy';
+            this.releasing = false;
+        });
+    }
+
+    act(timeElapsed) {
         this.left -= this.speed * timeElapsed / 1000;
         this._el.style.left = `${this.left}px`;
     }
@@ -118,15 +146,23 @@ class Level1Screen {
 
         this._lastUpdateAt = null;
 
+        this._rodHeight = 114;
+
+        this._screen.addEventListener('mousemove', (event) => {
+            this._characters.filter(character => character.dragging && !character.releasing)
+                .forEach(character => {
+                    character.updateLocation(event.x - this._container.offsetLeft, event.y - this._container.offsetTop);
+                });
+        });
+
         requestAnimationFrame(this._moveCharacters.bind(this));
     }
 
     addCharacter(imageAssets, type, speed) {
-        let rodHeight = 114;
 
         let character = new Character(
             this._container.offsetWidth,
-            rodHeight,
+            this._rodHeight,
             speed,
             imageAssets[`character-${type}`],
             imageAssets[`character-${type}-hover`]
@@ -143,12 +179,13 @@ class Level1Screen {
 
             let timeElapsed = timestamp - this._lastUpdateAt;
 
-            this._characters.filter(character => !character.dragging).forEach(character => {
-                if (character.left < -character.width) {
-                    character.removeFrom(this._screen);
-                    character.removed = true;
-                } else character.act(timeElapsed);
-            });
+            this._characters.filter(character => !character.dragging && !character.releasing)
+                .forEach(character => {
+                    if (character.left < -character.width) {
+                        character.removeFrom(this._screen);
+                        character.removed = true;
+                    } else character.act(timeElapsed);
+                });
 
             this._characters = this._characters.filter(character => !character.removed);
 

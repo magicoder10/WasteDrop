@@ -47,7 +47,7 @@ class Character {
         this.left = x;
         this._el.style.left = `${this.left - this._el.offsetWidth / 2}px`;
 
-        if(y < containerHeight - this._el.offsetHeight)
+        if (y < containerHeight - this._el.offsetHeight)
             this._el.style.top = `${y - this._el.offsetHeight / 2}px`;
     }
 
@@ -74,7 +74,7 @@ class Character {
 
         $(this._el).animate({
             top: this.top
-        }, 400, 'easeOutExpo', ()=>{
+        }, 400, 'easeOutExpo', () => {
             this._el.style.animationName = 'bumpy';
             this.releasing = false;
         });
@@ -127,10 +127,40 @@ class Level1Screen {
         this._assemblyLineCloseSideEl = this._container.querySelector('#assembly-line-close-side');
         this._assemblyLineRodsEl = this._container.querySelector('#assembly-line-rods');
 
+        this._cansEl = this._container.querySelector('#cans');
         this._canPaperEl = this._container.querySelector('#can-paper');
         this._canPlasticEl = this._container.querySelector('#can-plastic');
         this._canMetalEl = this._container.querySelector('#can-metal');
         this._canTrashEl = this._container.querySelector('#can-trash');
+
+        this._cans = [
+            {
+                el: this._canPaperEl,
+                name: 'paper'
+            },
+            {
+                el: this._canPlasticEl,
+                name: 'plastic'
+            },
+            {
+                el: this._canMetalEl,
+                name: 'metal'
+            },
+            {
+                el: this._canTrashEl,
+                name: 'trash'
+            }
+        ];
+
+        // this._cans.forEach(can => {
+        //     can.el.addEventListener('mouseover', () => {
+        //         can.el.src = imageAssets[`can-${can.name}-hover`].src;
+        //     });
+        //
+        //     can.el.addEventListener('mouseout', () => {
+        //         can.el.src = imageAssets[`can-${can.name}`].src;
+        //     });
+        // });
 
         this._pointsEl = this._container.querySelector('#points');
         this._timeRemainingEl = this._container.querySelector('#time-remaining');
@@ -155,10 +185,24 @@ class Level1Screen {
         this._rodHeight = 114;
 
         this._screen.addEventListener('mousemove', (event) => {
+            let left = event.x - this._container.offsetLeft;
+            let top = event.y - this._container.offsetTop;
+            let availableHeight = this._container.offsetHeight - this._rodHeight;
+
             this._characters.filter(character => character.dragging && !character.releasing)
                 .forEach(character => {
-                    character.updateLocation(event.x - this._container.offsetLeft, event.y - this._container.offsetTop, this._container.offsetHeight - this._rodHeight);
+                    character.updateLocation(left, top, availableHeight);
                 });
+
+            this._cans.forEach(can => {
+                let canLeft = can.el.offsetLeft + this._cansEl.offsetLeft;
+                let canTop = can.el.offsetTop + this._cansEl.offsetTop;
+
+                if (left > canLeft && top > canTop && left < canLeft + can.el.offsetWidth && top < canTop + can.el.offsetHeight)
+                    can.el.src = imageAssets[`can-${can.name}-hover`].src;
+                else
+                    can.el.src = imageAssets[`can-${can.name}`].src;
+            });
         });
 
         requestAnimationFrame(this._moveCharacters.bind(this));

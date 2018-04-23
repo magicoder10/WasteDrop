@@ -29,7 +29,8 @@ class WasteDropGame {
             'button-hover',
             'introduction',
             'level-1-background',
-            'falling'
+            'falling',
+            'game-over'
         ];
 
         this._totalAssets = this._imageAssetNames.length + this._audioAssetNames.length;
@@ -97,6 +98,10 @@ class WasteDropGame {
 
     _gameOver() {
         this._audioAssets['level-1-background'].pause();
+
+        this._audioAssets['game-over'].volume = 0.5;
+        this._audioAssets['game-over'].play();
+
         this._level1Screen.disableUserInteractions();
 
         let gameOverEl = document.createElement('div');

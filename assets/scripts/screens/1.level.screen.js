@@ -29,10 +29,6 @@ class Level1Screen {
                     <img id="assembly-line-far-side" draggable="false"/>
                     <img id="assembly-line-close-side" draggable="false"/>
                     <img id="assembly-line-rods" draggable="false">
-                    
-                    <div id="game-over">
-                        game over
-                    </div>
                 </div>
             `;
 

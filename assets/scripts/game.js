@@ -95,6 +95,9 @@ class WasteDropGame {
     }
 
     _gameOver() {
+        let gameOverEl = document.createElement('div');
+        gameOverEl.textContent = 'game over';
+        this._currentScreenContainer.appendChild(gameOverEl);
         this._audioAssets['level-1-background'].pause();
     }
 
@@ -175,7 +178,7 @@ class WasteDropGame {
                         this._level1Screen = new Level1Screen(this._nextScreenContainer, this._imageAssets, this._audioAssets);
 
                         this._points = 0;
-                        this._timeRemaining = 120;
+                        this._timeRemaining = 10;
 
                         this._level1Screen.updatePoints(this._points);
                         this._level1Screen.updateTimeRemaining(this._timeRemaining);

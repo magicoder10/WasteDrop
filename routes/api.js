@@ -36,7 +36,7 @@ router.post('/leader-board', function (req, res, next) {
         }
 
         let scoreRows = JSON.parse(data);
-        scoreRows.append(JSON.parse(req.body));
+        scoreRows.push(req.body);
 
         fs.writeFile(leaderBoardDataFilename, JSON.stringify(scoreRows), 'utf8', error => {
             if(error) {

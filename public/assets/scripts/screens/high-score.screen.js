@@ -41,23 +41,43 @@ class HighScoreScreen {
 
         this._replayIconEl.src = imageAssets['replay-icon'].src;
 
+        this.score = 0;
         this._getScores();
 
+    }
+
+    _updateScores(scoreRows) {
+        scoreRows.forEach((scoreRow, index) => {
+            let scoreRowEl = this._scoreRowsEl[index];
+            let playerNameEl = scoreRowEl.querySelector('.player-name');
+            let scoreEl = scoreRowEl.querySelector('.player-score');
+            playerNameEl.textContent = scoreRow.playerName;
+            scoreEl.textContent = scoreRow.score;
+        })
     }
 
     _getScores() {
         fetch('/api/leader-board')
             .then(response => response.json())
-            .then(scoreRows =>
-                scoreRows.forEach((scoreRow, index) => {
-                    let scoreRowEl = this._scoreRowsEl[index];
-                    let playerNameEl = scoreRowEl.querySelector('.player-name');
-                    let scoreEl = scoreRowEl.querySelector('.player-score');
-                    playerNameEl.textContent = scoreRow.playerName;
-                    scoreEl.textContent = scoreRow.score;
-                })
-            );
+            .then(this._updateScores.bind(this));
+    }
 
+    _uploadScore(playerName, score) {
+        let scoreRow = {
+            playerName: playerName,
+            score: score
+        };
+
+        fetch('/api/leader-board', {
+            body: JSON.stringify(scoreRow),
+            method: 'POST',
+            headers: {
+                'Authorization': 'waste-drop',
+                'content-type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(this._updateScores.bind(this));
     }
 
     show(onShown) {

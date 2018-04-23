@@ -3,6 +3,7 @@ class Character {
         this.category = category;
         this.left = left;
         this.top = 0;
+        this.width = 140;
         this.points = points;
         this.bottom = bottom;
         this.speed = speed;
@@ -17,6 +18,7 @@ class Character {
         this._el.src = normalImage.src;
         this._el.setAttribute('draggable', 'false');
         this._el.setAttribute('class', 'character');
+
 
         this._el.style.left = `${left}px`;
         this._el.style.bottom = `${bottom}px`;

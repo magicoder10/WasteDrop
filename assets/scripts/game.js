@@ -121,7 +121,7 @@ class WasteDropGame {
                 }
 
                 character.remove(()=>{
-
+                    this._level1Screen.removeCharacter(character);
                 });
 
                 this._points += character.points;
@@ -133,7 +133,7 @@ class WasteDropGame {
         let delay = 3000;
         this._addRandomCharacter();
 
-        setInterval(() => {
+        this._createCharactersTimer = setInterval(() => {
             this._addRandomCharacter();
         }, delay);
     }
@@ -143,6 +143,7 @@ class WasteDropGame {
             this._level1Screen.updateTimeRemaining(--timeRemaining);
             if (timeRemaining === 0) {
                 this._gameOver();
+                if(this._createCharactersTimer) clearInterval(this._createCharactersTimer);
                 clearInterval(timer);
             }
         }, 1000);

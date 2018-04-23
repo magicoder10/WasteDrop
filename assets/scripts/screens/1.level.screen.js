@@ -29,6 +29,10 @@ class Level1Screen {
                     <img id="assembly-line-far-side" draggable="false"/>
                     <img id="assembly-line-close-side" draggable="false"/>
                     <img id="assembly-line-rods" draggable="false">
+                    
+                    <div id="game-over">
+                        game over
+                    </div>
                 </div>
             `;
 
@@ -149,6 +153,10 @@ class Level1Screen {
         this._characters.push(character);
         character.addTo(this._screen);
 
+    }
+
+    removeCharacter(character) {
+        character.removeFrom(this._screen);
     }
 
     _moveCharacters(timestamp) {

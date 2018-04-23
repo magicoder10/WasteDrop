@@ -4,3 +4,56 @@ body {
     margin           : 0;
     text-align       : center;
 }
+
+footer ul {
+    list-style  : none;
+    padding     : 0;
+    margin      : 0;
+    color       : white;
+    position    : fixed;
+    left        : 0;
+    right       : 0;
+    bottom      : 50px;
+    font-family : 'Arial', sans-serif;
+}
+
+footer ul a {
+    color       : white;
+    font-weight : bold;
+}
+
+footer ul li:not(:last-child) {
+    margin-bottom : 10px;
+}
+
+footer #github-info {
+    font-size       : 30px;
+    display         : flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 14px;
+}
+
+footer #github-info #github-stargazers-count {
+    margin-left: 20px;
+    background    : white;
+    position      : relative;
+    border-radius : 2px;
+    color: black;
+    font-size: 14px;
+    height: 14px;
+    font-weight: bold;
+    padding: 6px 14px 8px 14px;
+}
+
+footer #github-info #github-stargazers-count:before {
+    content       : "";
+    position      : absolute;
+    right         : 100%;
+    top           : 10px;
+    width         : 0;
+    height        : 0;
+    border-top    : 4px solid transparent;
+    border-right  : 8px solid white;
+    border-bottom : 4px solid transparent;
+}

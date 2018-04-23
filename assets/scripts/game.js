@@ -22,7 +22,8 @@ class WasteDropGame {
             'character-cup',
             'character-cup-hover',
             'character-bag',
-            'character-bag-hover'
+            'character-bag-hover',
+            'replay-icon'
         ];
 
         this._audioAssetNames = [
@@ -31,7 +32,8 @@ class WasteDropGame {
             'level-1-background',
             'falling',
             'game-over',
-            'dropping'
+            'dropping',
+            'high-score'
         ];
 
         this._totalAssets = this._imageAssetNames.length + this._audioAssetNames.length;
@@ -174,6 +176,9 @@ class WasteDropGame {
                     setTimeout(() => {
                         this._highScoreScreen = new HighScoreScreen(this._nextScreenContainer, this._imageAssets, this._audioAssets);
                         this._highScoreScreen.show(() => {
+                            this._audioAssets['high-score'].loop = true;
+                            this._audioAssets['high-score'].volume = 0.2;
+                            this._audioAssets['high-score'].play();
                             this.swapScreens();
                         });
                     }, 600);

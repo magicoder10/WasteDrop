@@ -9,6 +9,8 @@ class Character {
         this.speed = speed;
         this.removed = false;
         this.removing = false;
+        this.isInteractive = true;
+
         this._normalImage = normalImage;
 
         this.dragging = false;
@@ -24,6 +26,8 @@ class Character {
         this._el.style.bottom = `${bottom}px`;
 
         this._el.addEventListener('mouseover', () => {
+            if(!this.isInteractive) return;
+
             this._el.src = hoverImage.src;
 
             this._el.style.cursor = 'pointer';
@@ -31,6 +35,7 @@ class Character {
         });
 
         this._el.addEventListener('mouseout', () => {
+
             this._el.src = normalImage.src;
 
             this._el.style.cursor = 'default';
@@ -38,14 +43,16 @@ class Character {
         });
 
         this._el.addEventListener('mousedown', () => {
+            if(!this.isInteractive) return;
+
             this.top = this._el.offsetTop;
-            console.log(this.top);
             this.dragging = true;
 
             onDragging(this);
         });
 
         this._el.addEventListener('mouseup', event => {
+
             this.dragging = false;
             onDropping(event.x, event.y, ()=>{
                 this.release();

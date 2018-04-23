@@ -44,6 +44,5 @@
     font-weight      : bolder;
     font-family      : 'Avenir', sans-serif;
     border-radius    : 6px;
-    opacity          : 0;
-    transition       : all 600ms cubic-bezier(1, 0, 0, 1);
+    opacity: 0;
 }

@@ -86,6 +86,8 @@ class Level1Screen {
 
         this._rodHeight = 114;
 
+        this._isInteractive = true;
+
         this._screen.addEventListener('mousemove', (event) => {
             if (!this._characterDragging) return;
 
@@ -97,7 +99,7 @@ class Level1Screen {
 
             this._cans.forEach(can => {
 
-                if (this._isInside(event.x, event.y, can))
+                if (this._isInside(event.x, event.y, can) && this._isInteractive)
                     can.el.src = imageAssets[`can-${can.name}-hover`].src;
                 else
                     can.el.src = imageAssets[`can-${can.name}`].src;
@@ -119,7 +121,17 @@ class Level1Screen {
         return left > canLeft && top > canTop && left < canLeft + can.el.offsetWidth && top < canTop + can.el.offsetHeight
     }
 
-    addCharacter(imageAssets, name, category, points, speed, onDropInsideCan) {
+    disableUserInteractions(){
+        this._isInteractive = false;
+        this._characters.forEach(character => {
+            character.isInteractive = false
+        });
+    }
+
+    addCharacter(imageAssets, audioAssets, name, category, points, speed, onDropInsideCan) {
+        audioAssets['falling'].playbackRate = 3;
+        audioAssets['falling'].volume = 0.3;
+
         let character = new Character(
             category,
             points,
@@ -137,8 +149,14 @@ class Level1Screen {
 
                 if(targetCans.length > 0) {
                     let targetCan = targetCans[0];
-                    onDropInsideCan(this._characterDragging, targetCan, onReleaseCharacter);
-                } else this._characterDragging.release();
+                    onDropInsideCan(this._characterDragging, targetCan, ()=>{
+                        audioAssets['falling'].play();
+                        onReleaseCharacter();
+                    });
+                } else {
+                    audioAssets['falling'].play();
+                    this._characterDragging.release();
+                }
 
                 this._cans.forEach(can => {
                     can.el.src = imageAssets[`can-${can.name}`].src;

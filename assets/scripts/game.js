@@ -21,14 +21,15 @@ class WasteDropGame {
             'can-paper-hover',
             'character-cup',
             'character-cup-hover',
-            'character-plastic-bag',
-            'character-plastic-bag-hover'
+            'character-bag',
+            'character-bag-hover'
         ];
 
         this._audioAssetNames = [
             'button-hover',
             'introduction',
-            'level-1-background'
+            'level-1-background',
+            'falling'
         ];
 
         this._totalAssets = this._imageAssetNames.length + this._audioAssetNames.length;
@@ -95,35 +96,42 @@ class WasteDropGame {
     }
 
     _gameOver() {
+        this._audioAssets['level-1-background'].pause();
+        this._level1Screen.disableUserInteractions();
+
         let gameOverEl = document.createElement('div');
+        gameOverEl.setAttribute('id', 'game-over');
         gameOverEl.textContent = 'game over';
         this._currentScreenContainer.appendChild(gameOverEl);
-        this._audioAssets['level-1-background'].pause();
+
+        $(gameOverEl).animate({
+            opacity: 1
+        }, 400, 'easeInOutExpo');
     }
 
     _addRandomCharacter() {
         let characterConfigs = [
             {
                 name: 'cup',
-                category: 'paper',
+                category: 'plastic',
                 points: 10
             },
             {
-                name: 'plastic-bag',
-                category: 'plastic',
+                name: 'bag',
+                category: 'paper',
                 points: 15
             }
         ];
         let characterConfigIndex = Math.floor(Math.random() * characterConfigs.length);
         let characterConfig = characterConfigs[characterConfigIndex];
-        this._level1Screen.addCharacter(this._imageAssets, characterConfig.name, characterConfig.category, characterConfig.points, 50,
+        this._level1Screen.addCharacter(this._imageAssets, this._audioAssets, characterConfig.name, characterConfig.category, characterConfig.points, 50,
             (character, targetCan, onReleaseCharacter) => {
-                if(character.category !== targetCan.name) {
+                if (character.category !== targetCan.name) {
                     onReleaseCharacter();
                     return;
                 }
 
-                character.remove(()=>{
+                character.remove(() => {
                     this._level1Screen.removeCharacter(character);
                 });
 
@@ -146,7 +154,7 @@ class WasteDropGame {
             this._level1Screen.updateTimeRemaining(--timeRemaining);
             if (timeRemaining === 0) {
                 this._gameOver();
-                if(this._createCharactersTimer) clearInterval(this._createCharactersTimer);
+                if (this._createCharactersTimer) clearInterval(this._createCharactersTimer);
                 clearInterval(timer);
             }
         }, 1000);

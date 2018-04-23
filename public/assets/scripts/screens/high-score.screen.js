@@ -24,7 +24,7 @@ class HighScoreScreen {
                         <img id="replay-icon">
                     </div>
                     
-                    <div id="blur-background">
+                    <div id="blurry-background">
                     </div>
                     
                     <div id="fill-name-dialog">
@@ -45,20 +45,46 @@ class HighScoreScreen {
         this._replayIconEl = this._container.querySelector('#replay-icon');
         this._scoreRowsEl = this._container.querySelectorAll('#scores > li');
         this._playerNameTextField = this._container.querySelector('#player-name-text-field');
-        this._closeIcon = this._container.querySelector('#close-icon');
+        this._closeIconEl = this._container.querySelector('#close-icon');
+        this._closeButtonEl = this._container.querySelector('#close-button');
         this._playerScoreEl = this._container.querySelector('#player-score');
+        this._blurryBackgroundEl = this._container.querySelector('#blurry-background');
+        this._fillNameDialogEl = this._container.querySelector('#fill-name-dialog');
 
         this._wallEl.src = imageAssets['wall'].src;
         this._groundEl.src = imageAssets['ground'].src;
         this._characterBagEl.src = imageAssets['character-bag'].src;
         this._characterCupEl.src = imageAssets['character-cup'].src;
-        this._closeIcon.src = imageAssets['close-icon'].src;
+        this._closeIconEl.src = imageAssets['close-icon'].src;
         this._replayIconEl.src = imageAssets['replay-icon'].src;
 
         this._playerNameTextField.focus();
 
         this._score = 0;
         this._getScores();
+
+        this._closeButtonEl.addEventListener('click', () => {
+            let playerName = this._playerNameTextField.value || "Player";
+            if (playerName.length >= 30) {
+                alert('Player name has to be less than 30 characters');
+                return;
+            }
+            this._uploadScoreToServer(playerName, this._score, () => {
+                $(this._blurryBackgroundEl)
+                    .animate({
+                        opacity: 0
+                    }, 200, 'easeOutExpo', () => {
+                        this._container.removeChild(this._blurryBackgroundEl);
+                    });
+
+                $(this._fillNameDialogEl)
+                    .animate({
+                        opacity: 0
+                    }, 200, 'easeOutExpo', () => {
+                        this._container.removeChild(this._fillNameDialogEl);
+                    });
+            });
+        });
     }
 
     _updateScores(scoreRows) {
@@ -82,7 +108,7 @@ class HighScoreScreen {
         this._playerScoreEl.textContent = `${this._score}`;
     }
 
-    _uploadScoreToServer(playerName, score) {
+    _uploadScoreToServer(playerName, score, onScoreUploaded) {
         let scoreRow = {
             playerName: playerName,
             score: score
@@ -97,7 +123,10 @@ class HighScoreScreen {
             }
         })
             .then(response => response.json())
-            .then(this._updateScores.bind(this));
+            .then(scoreRows => {
+                this._updateScores(scoreRows);
+                onScoreUploaded();
+            });
     }
 
     show(onShown) {

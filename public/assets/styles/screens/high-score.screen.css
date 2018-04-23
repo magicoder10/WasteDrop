@@ -118,7 +118,7 @@
     margin-left: calc(+150px - 90px);
 }
 
-#high-score-screen > #blur-background {
+#high-score-screen > #blurry-background {
     position: absolute;
     left: 0;
     right: 0;

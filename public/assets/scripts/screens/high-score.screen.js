@@ -23,6 +23,9 @@ class HighScoreScreen {
                     <div id="replay-button" title="Replay">
                         <img id="replay-icon">
                     </div>
+                    
+                    <div id="blur-background">
+                    </div>
                 </div>
             `;
 

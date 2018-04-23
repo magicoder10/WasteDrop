@@ -173,8 +173,8 @@ class WasteDropGame {
                             this.swapScreens();
                         });
                     }, 600);
-                }, 8000);
-
+                }, 1000);
+                // 8000
 
             }
         }, 1000);

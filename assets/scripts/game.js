@@ -30,7 +30,8 @@ class WasteDropGame {
             'introduction',
             'level-1-background',
             'falling',
-            'game-over'
+            'game-over',
+            'dropping'
         ];
 
         this._totalAssets = this._imageAssetNames.length + this._audioAssetNames.length;
@@ -99,9 +100,6 @@ class WasteDropGame {
     _gameOver() {
         this._audioAssets['level-1-background'].pause();
 
-        this._audioAssets['game-over'].volume = 0.5;
-        this._audioAssets['game-over'].play();
-
         this._level1Screen.disableUserInteractions();
 
         let gameOverEl = document.createElement('div');
@@ -112,6 +110,10 @@ class WasteDropGame {
         $(gameOverEl).animate({
             opacity: 1
         }, 400, 'easeInOutExpo');
+
+        this._audioAssets['game-over'].playbackRate = 0.9;
+        this._audioAssets['game-over'].volume = 0.2;
+        this._audioAssets['game-over'].play();
     }
 
     _addRandomCharacter() {
@@ -135,6 +137,11 @@ class WasteDropGame {
                     onReleaseCharacter();
                     return;
                 }
+
+
+                this._audioAssets['dropping'].playbackRate = 3;
+                this._audioAssets['dropping'].volume = 0.5;
+                this._audioAssets['dropping'].play();
 
                 character.remove(() => {
                     this._level1Screen.removeCharacter(character);

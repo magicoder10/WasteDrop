@@ -34,29 +34,6 @@ class HighScoreScreen {
         this._replayIconEl = this._container.querySelector('#replay-icon');
         this._scoreRowsEl = this._container.querySelectorAll('#scores > li');
 
-        this._scoreRows = [
-            {
-                playerName: 'Jacob',
-                score: 1200
-            },
-            {
-                playerName: 'Sam',
-                score: 1100
-            },
-            {
-                playerName: 'Harry',
-                score: 1000
-            },
-            {
-                playerName: 'Taylor',
-                score: 900
-            },
-            {
-                playerName: 'Alex',
-                score: 800
-            }
-        ];
-
         this._wallEl.src = imageAssets['wall'].src;
         this._groundEl.src = imageAssets['ground'].src;
         this._characterBagEl.src = imageAssets['character-bag'].src;
@@ -64,18 +41,23 @@ class HighScoreScreen {
 
         this._replayIconEl.src = imageAssets['replay-icon'].src;
 
-        this._updateScores(this._scoreRows);
+        this._getScores();
 
     }
 
-    _updateScores(scoreRows) {
-        scoreRows.forEach((scoreRow, index) => {
-            let scoreRowEl = this._scoreRowsEl[index];
-            let playerNameEl = scoreRowEl.querySelector('.player-name');
-            let scoreEl = scoreRowEl.querySelector('.player-score');
-            playerNameEl.textContent = scoreRow.playerName;
-            scoreEl.textContent = scoreRow.score;
-        });
+    _getScores() {
+        fetch('/api/leader-board')
+            .then(response => response.json())
+            .then(scoreRows =>
+                scoreRows.forEach((scoreRow, index) => {
+                    let scoreRowEl = this._scoreRowsEl[index];
+                    let playerNameEl = scoreRowEl.querySelector('.player-name');
+                    let scoreEl = scoreRowEl.querySelector('.player-score');
+                    playerNameEl.textContent = scoreRow.playerName;
+                    scoreEl.textContent = scoreRow.score;
+                })
+            );
+
     }
 
     show(onShown) {

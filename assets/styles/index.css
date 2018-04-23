@@ -5,15 +5,19 @@ body {
     text-align       : center;
 }
 
+footer {
+    position    : fixed;
+    left: 0;
+    right: 0;
+    top         : 50%;
+    margin-top  : 280px;
+}
+
 footer ul {
     list-style  : none;
     padding     : 0;
     margin      : 0;
     color       : white;
-    position    : fixed;
-    left        : 0;
-    right       : 0;
-    bottom      : 50px;
     font-family : 'Arial', sans-serif;
 }
 

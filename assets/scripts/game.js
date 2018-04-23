@@ -48,44 +48,35 @@ class WasteDropGame {
         this._timeRemaining = 0;
     }
 
-    _loadImageAssets(path, assetNames, extension, onProgress) {
+    _loadAsset(path, assetNames, extension, AssetType, loadedEventName, onProgress, onComplete, assets, count) {
+        let assetName = assetNames[count];
+        let asset = new AssetType();
+        asset.addEventListener(loadedEventName, () => {
+            assets[assetName] = asset;
+            count++;
+            onProgress();
+            if (count === assetNames.length)
+                onComplete(assets);
+            else this._loadAsset(path, assetNames, extension, AssetType, loadedEventName, onProgress, onComplete, assets, count);
+        });
+        asset.src = `${path}/${assetName}.${extension}`;
+    }
+
+    _loadAllAssets(path, assetNames, extension, AssetType, loadedEventName, onProgress) {
         return new Promise((onComplete, onFail) => {
             let assets = {};
-
             let count = 0;
 
-            assetNames.forEach(assetName => {
-                let image = new Image();
-                image.onload = () => {
-                    assets[assetName] = image;
-                    count++;
-                    onProgress();
-                    if (count === assetNames.length)
-                        onComplete(assets);
-                };
-                image.src = `${path}/${assetName}.${extension}`;
-            });
+            this._loadAsset(path, assetNames, extension, AssetType, loadedEventName, onProgress, onComplete, assets, count);
         });
     }
 
+    _loadImageAssets(path, assetNames, extension, onProgress) {
+        return this._loadAllAssets(path, assetNames, extension, Image, 'load', onProgress);
+    }
+
     _loadAudioAssets(path, assetNames, extension, onProgress) {
-        return new Promise((onComplete, onFail) => {
-            let assets = {};
-
-            let count = 0;
-
-            assetNames.forEach(assetName => {
-                let audio = new Audio();
-                audio.addEventListener('loadeddata', () => {
-                    assets[assetName] = audio;
-                    count++;
-                    onProgress();
-                    if (count === assetNames.length)
-                        onComplete(assets);
-                });
-                audio.src = `${path}/${assetName}.${extension}`;
-            });
-        });
+        return this._loadAllAssets(path, assetNames, extension, Audio, 'loadeddata', onProgress);
     }
 
     swapScreens() {
@@ -230,7 +221,6 @@ class WasteDropGame {
 
                                 this._startCountingDown(this._timeRemaining);
                                 this._createCharacters();
-
                             });
                         }, 400);
                     };

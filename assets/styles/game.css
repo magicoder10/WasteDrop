@@ -19,7 +19,7 @@
     z-index : 1;
 }
 
-#loading-screen, #start-screen, #level-1-screen {
+#loading-screen, #start-screen, #level-1-screen, #high-score-screen {
     position         : absolute;
     top              : 0;
     left             : 0;

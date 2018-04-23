@@ -1,0 +1,11 @@
+#high-score-screen > #wall {
+    position : absolute;
+    left     : 0;
+    top      : 0;
+}
+
+#high-score-screen > #ground {
+    position : absolute;
+    left     : 0;
+    top      : 374px;
+}

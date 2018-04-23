@@ -138,7 +138,6 @@ class WasteDropGame {
                     return;
                 }
 
-
                 this._audioAssets['dropping'].playbackRate = 3;
                 this._audioAssets['dropping'].volume = 0.5;
                 this._audioAssets['dropping'].play();
@@ -168,6 +167,19 @@ class WasteDropGame {
                 this._gameOver();
                 if (this._createCharactersTimer) clearInterval(this._createCharactersTimer);
                 clearInterval(timer);
+
+                setTimeout(() => {
+                    this._level1Screen.hide();
+
+                    setTimeout(() => {
+                        this._highScoreScreen = new HighScoreScreen(this._nextScreenContainer, this._imageAssets, this._audioAssets);
+                        this._highScoreScreen.show(() => {
+                            this.swapScreens();
+                        });
+                    }, 600);
+                }, 8000);
+
+
             }
         }, 1000);
     }
@@ -198,7 +210,7 @@ class WasteDropGame {
                         this._level1Screen = new Level1Screen(this._nextScreenContainer, this._imageAssets, this._audioAssets);
 
                         this._points = 0;
-                        this._timeRemaining = 10;
+                        this._timeRemaining = 2;
 
                         this._level1Screen.updatePoints(this._points);
                         this._level1Screen.updateTimeRemaining(this._timeRemaining);

@@ -210,4 +210,14 @@ class Level1Screen {
             onShown();
         }, 600);
     }
+
+    hide() {
+        this._container.style.opacity = '0';
+    }
+
+    waitAndHide() {
+        setTimeout(() => {
+            this.hide();
+        }, 400);
+    }
 }

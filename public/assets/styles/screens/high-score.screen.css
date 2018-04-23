@@ -129,3 +129,65 @@
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
 }
+
+#high-score-screen #fill-name-dialog {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: white;
+    padding: 40px;
+    z-index: 2;
+    border: 6px solid #979797;
+    border-radius: 6px;
+}
+
+#high-score-screen #fill-name-dialog #player-score {
+    font-size: 48px;
+    text-align: center;
+    font-family: 'American Typewriter', sans-serif;
+    margin-bottom: 40px;
+    font-weight: bold;
+    color: #717171;
+}
+
+#high-score-screen #fill-name-dialog #player-name-text-field {
+    background-color: transparent;
+    padding: 0 0 14px 0;
+    border-top: none;
+    font-family: 'American Typewriter', sans-serif;
+    font-size: 22px;
+    border-left: none;
+    border-right: none;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid #979797;
+    outline: none;
+    color: #717171;
+    text-transform: capitalize;
+}
+
+#high-score-screen #fill-name-dialog #player-name-text-field::placeholder {
+    color: #717171;
+    text-transform: uppercase;
+    opacity: 1;
+}
+
+#high-score-screen #fill-name-dialog #close-button {
+    position: absolute;
+    right: 0;
+    top :0;
+    transform: translateX(50%) translateY(-50%);
+
+    background-color: #979797;
+    padding: 14px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    transition: background-color 100ms cubic-bezier(1, 0, 0, 1);
+}
+
+#high-score-screen #fill-name-dialog #close-button:hover {
+    cursor: pointer;
+    background-color: #717171;
+}

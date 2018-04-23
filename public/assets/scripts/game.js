@@ -23,7 +23,8 @@ class WasteDropGame {
             'character-cup-hover',
             'character-bag',
             'character-bag-hover',
-            'replay-icon'
+            'replay-icon',
+            'close-icon'
         ];
 
         this._audioAssetNames = [
@@ -166,6 +167,8 @@ class WasteDropGame {
 
                     setTimeout(() => {
                         this._highScoreScreen = new HighScoreScreen(this._nextScreenContainer, this._imageAssets, this._audioAssets);
+                        this._highScoreScreen.setScore(this._points);
+
                         this._highScoreScreen.show(() => {
                             this._audioAssets['high-score'].loop = true;
                             this._audioAssets['high-score'].volume = 0.2;
@@ -206,7 +209,7 @@ class WasteDropGame {
                         this._level1Screen = new Level1Screen(this._nextScreenContainer, this._imageAssets, this._audioAssets);
 
                         this._points = 0;
-                        this._timeRemaining = 2;
+                        this._timeRemaining = 10;
 
                         this._level1Screen.updatePoints(this._points);
                         this._level1Screen.updateTimeRemaining(this._timeRemaining);

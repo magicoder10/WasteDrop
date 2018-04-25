@@ -2,11 +2,11 @@
 
 Recyle game for kids
 
-# Getting Started
-## Prerequisites
+## Getting Started
+### Prerequisites
 - docker v18.03.0
 
-## Build the Docker Image
+### Build the Docker Image
 
 To build the docker image, run the following command in the terminal:
 
@@ -14,7 +14,7 @@ To build the docker image, run the following command in the terminal:
 docker build -t harryliu/waste-drop:alpha .
 ```
 
-## Configurate the LeaderBoard
+### Configurate the LeaderBoard
 
 Create `data/leader-board.data.json` file inside project root directory:
 
@@ -28,7 +28,7 @@ and replace its content with:
 []
 ```
 
-## Setting Up Environment Variables
+### Setting Up Environment Variables
 
 Create `.env` file inside project root directory: 
 
@@ -41,7 +41,7 @@ and replace its content with:
 SECRET=waste-drop
 ```
 
-## Launch the Container
+### Launch the Container
 
 To lunch the docker container, run the following in the terminal:
 
@@ -51,8 +51,8 @@ docker run -v ${PWD}/data:/usr/src/app/data -v ${PWD}/public:/usr/src/app/public
 
 Now you can play the game by visiting `http://localhost:8081` in the broswer.
 
-# Deployment
-## Ubuntu & Nginx
+## Deployment
+### Ubuntu & Nginx
 
 To configure custom domain name for the game, you first need to create a nginx configuration file for the virtual host:
 
@@ -91,10 +91,10 @@ sudo systemctl reload nginx
 
 Now you can play the game by visiting `http://example.com` in the broswer.
 
-# Author
+## Author
 
 - **Yang Liu** - *Initial work* - [byliuyang](https://github.com/byliuyang)
 
-# Acknowdgement
+## Acknowledgement
 
 Special thanks to **soundimage.org** and **freesound.org** for providing the sounds effects.

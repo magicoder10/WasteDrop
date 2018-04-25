@@ -16,7 +16,13 @@ docker build -t harryliu/waste-drop:alpha .
 
 ## Configurate the LeaderBoard
 
-Create `data/leader-board.data.json` file inside project root directory and replace its content with:
+Create `data/leader-board.data.json` file inside project root directory:
+
+```bash
+mkdir data
+nano data/leader-board.data.json
+``` 
+and replace its content with:
 
 ```json
 []
@@ -24,7 +30,12 @@ Create `data/leader-board.data.json` file inside project root directory and repl
 
 ## Setting Up Environment Variables
 
-Create `.env` file inside project root directory and replace its content with:
+Create `.env` file inside project root directory: 
+
+```bash
+nano .env
+```
+and replace its content with:
 
 ```
 SECRET=waste-drop

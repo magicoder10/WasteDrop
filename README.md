@@ -46,7 +46,7 @@ SECRET=waste-drop
 To lunch the docker container, run the following in the terminal:
 
 ```bash
-docker run -v ${PWD}/data:/usr/src/app/data -v ${PWD}/public:/usr/src/app/public -p 8080:3000 --env-file=.env -it harryliu/waste-drop:alpha
+docker run -v ${PWD}/data:/usr/src/app/data -v ${PWD}/public:/usr/src/app/public -p 8081:3000 --env-file=.env -dt harryliu/waste-drop:alpha
 ```
 
 Now you can play the game by visiting `http://localhost:8081` in the broswer.
@@ -78,13 +78,23 @@ server {
 ```
 
 You also need to create a symbolic link for the configuration:
+
 ```bash
 sudo ln -s /etc/nginx/sites-available/000-example.com /etc/nginx/sites-enabled/000-example.com
 ``` 
 
 and reload it:
+
 ```
 sudo systemctl reload nginx
 ```
 
 Now you can play the game by visiting `http://example.com` in the broswer.
+
+# Author
+
+- **Yang Liu** - *Initial work* - [byliuyang](https://github.com/byliuyang)
+
+# Acknowdgement
+
+Special thanks to **soundimage.org** and **freesound.org** for providing the sounds effects.

@@ -74,14 +74,14 @@ class HighScoreScreen {
                     .animate({
                         opacity: 0
                     }, 200, 'easeOutExpo', () => {
-                        this._container.removeChild(this._blurryBackgroundEl);
+                        this._screen.removeChild(this._blurryBackgroundEl);
                     });
 
                 $(this._fillNameDialogEl)
                     .animate({
                         opacity: 0
                     }, 200, 'easeOutExpo', () => {
-                        this._container.removeChild(this._fillNameDialogEl);
+                        this._screen.removeChild(this._fillNameDialogEl);
                     });
             });
         });

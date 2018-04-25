@@ -176,11 +176,37 @@ class WasteDropGame {
                             this.swapScreens();
                         });
                     }, 600);
-                }, 1000);
-                // 8000
+                }, 8000);
 
             }
         }, 1000);
+    }
+
+    _playLevel1() {
+        this._audioAssets['introduction'].volume = 0;
+        this._audioAssets['introduction'].pause();
+
+        this._startScreen.hide();
+        this._level1Screen = new Level1Screen(this._nextScreenContainer, this._imageAssets, this._audioAssets);
+
+        this._points = 0;
+        this._timeRemaining = 30;
+
+        this._level1Screen.updatePoints(this._points);
+        this._level1Screen.updateTimeRemaining(this._timeRemaining);
+
+        setTimeout(() => {
+            this._level1Screen.show(() => {
+                this.swapScreens();
+
+                this._audioAssets['level-1-background'].loop = true;
+                this._audioAssets['level-1-background'].volume = 0.2;
+                this._audioAssets['level-1-background'].play();
+
+                this._startCountingDown(this._timeRemaining);
+                this._createCharacters();
+            });
+        }, 400);
     }
 
     run() {
@@ -202,30 +228,7 @@ class WasteDropGame {
                     this._startScreen = new StartScreen(this._nextScreenContainer, this._imageAssets, this._audioAssets);
 
                     this._startScreen.onStartButtonClick = () => {
-                        this._audioAssets['introduction'].volume = 0;
-                        this._audioAssets['introduction'].pause();
-
-                        this._startScreen.hide();
-                        this._level1Screen = new Level1Screen(this._nextScreenContainer, this._imageAssets, this._audioAssets);
-
-                        this._points = 0;
-                        this._timeRemaining = 10;
-
-                        this._level1Screen.updatePoints(this._points);
-                        this._level1Screen.updateTimeRemaining(this._timeRemaining);
-
-                        setTimeout(() => {
-                            this._level1Screen.show(() => {
-                                this.swapScreens();
-
-                                this._audioAssets['level-1-background'].loop = true;
-                                this._audioAssets['level-1-background'].volume = 0.2;
-                                this._audioAssets['level-1-background'].play();
-
-                                this._startCountingDown(this._timeRemaining);
-                                this._createCharacters();
-                            });
-                        }, 400);
+                        this._playLevel1();
                     };
 
                     this._startScreen.show(() => {

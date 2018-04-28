@@ -20,8 +20,8 @@ class HighScoreScreen {
                     <img id="character-bag">
                     <img id="character-cup">
                     
-                    <div id="replay-button" title="Replay">
-                        <img id="replay-icon">
+                    <div id="play-again-button" title="Play Again">
+                        <img id="play-again-icon">
                     </div>
                     
                     <div id="blurry-background">
@@ -42,7 +42,7 @@ class HighScoreScreen {
         this._groundEl = this._container.querySelector('#ground');
         this._characterBagEl = this._container.querySelector('#character-bag');
         this._characterCupEl = this._container.querySelector('#character-cup');
-        this._replayIconEl = this._container.querySelector('#replay-icon');
+        this._playAgainIconEl = this._container.querySelector('#play-again-icon');
         this._scoreRowsEl = this._container.querySelectorAll('#scores > li');
         this._playerNameTextField = this._container.querySelector('#player-name-text-field');
         this._closeIconEl = this._container.querySelector('#close-icon');
@@ -56,7 +56,7 @@ class HighScoreScreen {
         this._characterBagEl.src = imageAssets['character-bag'].src;
         this._characterCupEl.src = imageAssets['character-cup'].src;
         this._closeIconEl.src = imageAssets['close-icon'].src;
-        this._replayIconEl.src = imageAssets['replay-icon'].src;
+        this._playAgainIconEl.src = imageAssets['play-again-icon'].src;
 
         this._playerNameTextField.focus();
 

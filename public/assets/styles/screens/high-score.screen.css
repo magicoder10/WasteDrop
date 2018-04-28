@@ -75,7 +75,7 @@
     margin-bottom: 18px;
 }
 
-#high-score-screen > #replay-button {
+#high-score-screen > #play-again-button {
     position: absolute;
     border-radius: 50%;
 
@@ -90,15 +90,15 @@
     background-color: #3F7762;
 }
 
-#high-score-screen > #replay-button:hover {
+#high-score-screen > #play-again-button:hover {
     cursor: pointer;
 }
 
-#high-score-screen > #replay-button > #replay-icon {
+#high-score-screen > #play-again-button > #play-again-icon {
     transition       : all 600ms cubic-bezier(1, 0, 0, 1);
 }
 
-#high-score-screen > #replay-button:hover > #replay-icon {
+#high-score-screen > #play-again-button:hover > #play-again-icon {
    transform: rotate(-270deg);
 }
 

@@ -50,6 +50,7 @@ class HighScoreScreen {
         this._playerScoreEl = this._container.querySelector('#player-score');
         this._blurryBackgroundEl = this._container.querySelector('#blurry-background');
         this._fillNameDialogEl = this._container.querySelector('#fill-name-dialog');
+        this._playAgainButtonEl = this._container.querySelector('#play-again-button');
 
         this._wallEl.src = imageAssets['wall'].src;
         this._groundEl.src = imageAssets['ground'].src;
@@ -62,6 +63,12 @@ class HighScoreScreen {
 
         this._score = 0;
         this._getScores();
+
+        this.onPlayAgainButtonClick = () => {};
+
+        this._playAgainButtonEl.addEventListener('click', ()=>{
+            this.onPlayAgainButtonClick();
+        });
 
         this._closeButtonEl.addEventListener('click', () => {
             let playerName = this._playerNameTextField.value || "Player";
@@ -134,5 +141,9 @@ class HighScoreScreen {
         setTimeout(() => {
             onShown();
         }, 600);
+    }
+
+    hide() {
+        this._container.style.opacity = '0';
     }
 }

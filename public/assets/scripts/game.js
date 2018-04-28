@@ -105,6 +105,7 @@ class WasteDropGame {
             opacity: 1
         }, 400, 'easeInOutExpo');
 
+        this._audioAssets['game-over'].currentTime = 0;
         this._audioAssets['game-over'].playbackRate = 0.9;
         this._audioAssets['game-over'].volume = 0.2;
         this._audioAssets['game-over'].play();
@@ -132,6 +133,7 @@ class WasteDropGame {
                     return;
                 }
 
+                this._audioAssets['dropping'].currentTime = 0;
                 this._audioAssets['dropping'].playbackRate = 3;
                 this._audioAssets['dropping'].volume = 0.5;
                 this._audioAssets['dropping'].play();
@@ -168,8 +170,18 @@ class WasteDropGame {
                     setTimeout(() => {
                         this._highScoreScreen = new HighScoreScreen(this._nextScreenContainer, this._imageAssets, this._audioAssets);
                         this._highScoreScreen.setScore(this._points);
+                        this._highScoreScreen.onPlayAgainButtonClick = () => {
+                            this._audioAssets['high-score'].volume = 0;
+                            this._audioAssets['high-score'].pause();
+
+                            this._highScoreScreen.hide();
+
+                            this._playLevel1();
+                        };
 
                         this._highScoreScreen.show(() => {
+
+                            this._audioAssets['high-score'].currentTime = 0;
                             this._audioAssets['high-score'].loop = true;
                             this._audioAssets['high-score'].volume = 0.2;
                             this._audioAssets['high-score'].play();
@@ -183,10 +195,6 @@ class WasteDropGame {
     }
 
     _playLevel1() {
-        this._audioAssets['introduction'].volume = 0;
-        this._audioAssets['introduction'].pause();
-
-        this._startScreen.hide();
         this._level1Screen = new Level1Screen(this._nextScreenContainer, this._imageAssets, this._audioAssets);
 
         this._points = 0;
@@ -199,6 +207,7 @@ class WasteDropGame {
             this._level1Screen.show(() => {
                 this.swapScreens();
 
+                this._audioAssets['level-1-background'].currentTime = 0;
                 this._audioAssets['level-1-background'].loop = true;
                 this._audioAssets['level-1-background'].volume = 0.2;
                 this._audioAssets['level-1-background'].play();
@@ -228,12 +237,18 @@ class WasteDropGame {
                     this._startScreen = new StartScreen(this._nextScreenContainer, this._imageAssets, this._audioAssets);
 
                     this._startScreen.onStartButtonClick = () => {
+                        this._audioAssets['introduction'].volume = 0;
+                        this._audioAssets['introduction'].pause();
+
+                        this._startScreen.hide();
+
                         this._playLevel1();
                     };
 
                     this._startScreen.show(() => {
                         this.swapScreens();
 
+                        this._audioAssets['introduction'].currentTime = 0;
                         this._audioAssets['introduction'].loop = true;
                         this._audioAssets['introduction'].volume = 0.2;
                         this._audioAssets['introduction'].play();

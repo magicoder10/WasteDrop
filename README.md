@@ -14,7 +14,7 @@ To build the docker image, run the following command in the terminal:
 docker build -t harryliu/waste-drop:alpha .
 ```
 
-### Configurate the LeaderBoard
+### Configure the LeaderBoard
 
 Create `data/leader-board.data.json` file inside project root directory:
 

@@ -46,7 +46,7 @@ SECRET=waste-drop
 To lunch the docker container, run the following in the terminal:
 
 ```bash
-docker run -v ${PWD}/data:/usr/src/app/data -v ${PWD}/public:/usr/src/app/public -p 8081:3000 --env-file=.env -dt harryliu/waste-drop:alpha
+docker run -v ${PWD}:/usr/src/app -p 8081:3000 --env-file=.env -dt harryliu/waste-drop:alpha
 ```
 
 Now you can play the game by visiting `http://localhost:8081` in the broswer.

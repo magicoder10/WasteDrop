@@ -1,0 +1,97 @@
+#credit-screen > #wall {
+    position : absolute;
+    left     : 0;
+    top      : 0;
+}
+
+#credit-screen > #ground {
+    position : absolute;
+    left     : 0;
+    top      : 374px;
+}
+
+#credit-screen > #credits {
+    position: absolute;
+    left: 50%;
+    top : 50%;
+    transform: translateX(-50%) translateY(-50%);
+
+    width: 300px;
+    height: 430px;
+    background-color: white;
+    border: 8px solid #3F7762;
+    border-radius: 10px;
+}
+
+#credit-screen > #credits > #title {
+    padding          : 10px 0 18px 0;
+    color            : white;
+    font-size        : 26px;
+    font-weight      : bold;
+    text-transform   : uppercase;
+    font-family      : 'Wawati TC', sans-serif;
+    background-color : #3F7762;
+}
+
+#credit-screen > #go-back-button {
+    position: absolute;
+    border-radius: 50%;
+
+    top : 50%;
+    left : 74px;
+    transform: translateY(-50%);
+
+    padding: 37px 20px;
+    height: 34px;
+    width: 68px;
+    text-align: center;
+    background-color: #3F7762;
+    transition       : all 100ms cubic-bezier(1, 0, 0, 1);
+}
+
+#credit-screen > #go-back-button:hover {
+    cursor: pointer;
+    background-color: #474747;
+}
+
+#credit-screen > #character-bag, #credit-screen > #character-cup {
+    position: absolute;
+    left: 50%;
+    z-index: 1;
+    bottom: 40px;
+    width: 180px;
+}
+
+#credit-screen > #character-bag {
+    margin-left: calc(-150px - 90px);
+}
+
+#credit-screen > #character-cup {
+    margin-left: calc(+150px - 90px);
+}
+
+#credit-screen #sound-effects {
+    margin-top: 42px;
+}
+
+#credit-screen #sound-effects, #credit-screen a {
+    color: #1A939D;
+    font-size: 20px;
+}
+
+#credit-screen a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#credit-screen a:hover {
+    text-decoration: underline;
+}
+
+#credit-screen #credits div:first-child {
+    margin-bottom: 28px;
+}
+
+#credit-screen #credits div:nth-child(2) {
+    margin-bottom: 6px;
+}

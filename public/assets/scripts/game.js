@@ -189,7 +189,7 @@ class WasteDropGame {
                             this.swapScreens();
                         });
                     }, 600);
-                }, 8000);
+                }, 6000);
 
             }
         }, 1000);
@@ -224,12 +224,16 @@ class WasteDropGame {
 
         this._creditScreen.onGoBackButtonClick = ()=>{
             this._creditScreen.hide();
-          this._showStartScreen();
+            setTimeout(() => {
+                this._showStartScreen();
+            }, 400);
         };
+
+        setTimeout(() => {
 
         this._creditScreen.show(()=>{
             this.swapScreens();
-        });
+        })}, 400);
     }
 
     _showStartScreen() {

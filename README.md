@@ -2,6 +2,13 @@
 
 Recyle game for kids
 
+## Screenshots
+![Title](landing-screen.png)
+![Level 1](gaming-screen-1.png)
+![Level 1](gaming-screen-2.png)
+![Player's Score](player-score.png)
+![High Score](high-score.png)
+
 ## Getting Started
 ### Prerequisites
 - docker v18.03.0

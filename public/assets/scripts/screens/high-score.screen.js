@@ -54,7 +54,7 @@ class HighScoreScreen {
 
         this._wallEl.src = imageAssets['wall'].src;
         this._groundEl.src = imageAssets['ground'].src;
-        this._characterBagEl.src = imageAssets['character-bag'].src;
+        this._characterBagEl.src = imageAssets['character-plastic-bag'].src;
         this._characterCupEl.src = imageAssets['character-cup'].src;
         this._closeIconEl.src = imageAssets['close-icon'].src;
         this._playAgainIconEl.src = imageAssets['play-again-icon'].src;

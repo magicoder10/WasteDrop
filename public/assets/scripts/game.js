@@ -164,6 +164,7 @@ class WasteDropGame {
                     this._level1Screen.removeCharacter(character);
                 });
 
+                this._correctCharacters.push(characterConfig.name);
                 this._points += character.points;
                 this._level1Screen.updatePoints(this._points);
             });
@@ -220,7 +221,8 @@ class WasteDropGame {
         this._level1Screen = new Level1Screen(this._nextScreenContainer, this._imageAssets, this._audioAssets);
 
         this._points = 0;
-        this._timeRemaining = 120;
+        this._correctCharacters = [];
+        this._timeRemaining = 180;
 
         this._level1Screen.updatePoints(this._points);
         this._level1Screen.updateTimeRemaining(this._timeRemaining);

@@ -143,7 +143,7 @@ class WasteDropGame {
             {
                 name: 'banana-peel',
                 category: 'trash',
-                points: 14
+                points: 13
             }
         ];
         let characterConfigIndex = Math.floor(Math.random() * characterConfigs.length);
@@ -192,7 +192,7 @@ class WasteDropGame {
 
                     setTimeout(() => {
                         this._highScoreScreen = new HighScoreScreen(this._nextScreenContainer, this._imageAssets, this._audioAssets);
-                        this._highScoreScreen.setScore(this._points);
+                        this._highScoreScreen.setScore(this._points, this._correctCharacters);
                         this._highScoreScreen.onPlayAgainButtonClick = () => {
                             this._audioAssets['high-score'].volume = 0;
                             this._audioAssets['high-score'].pause();

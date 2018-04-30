@@ -62,6 +62,7 @@ class HighScoreScreen {
         this._playerNameTextField.focus();
 
         this._score = 0;
+        this._correctCharacters = [];
         this._getScores();
 
         this.onPlayAgainButtonClick = () => {};
@@ -72,11 +73,11 @@ class HighScoreScreen {
 
         this._closeButtonEl.addEventListener('click', () => {
             let playerName = this._playerNameTextField.value || "Player";
-            if (playerName.length >= 30) {
-                alert('Player name has to be less than 30 characters');
+            if (playerName.length >= 10) {
+                alert('Player name has to be less than 10 characters');
                 return;
             }
-            this._uploadScoreToServer(playerName, this._score, () => {
+            this._uploadScoreToServer(playerName, this._correctCharacters, () => {
                 $(this._blurryBackgroundEl)
                     .animate({
                         opacity: 0
@@ -110,15 +111,16 @@ class HighScoreScreen {
             .then(this._updateScores.bind(this));
     }
 
-    setScore(score) {
+    setScore(score, correctCharacters) {
         this._score = score;
+        this._correctCharacters = correctCharacters;
         this._playerScoreEl.textContent = `${this._score}`;
     }
 
-    _uploadScoreToServer(playerName, score, onScoreUploaded) {
+    _uploadScoreToServer(playerName, correctCharacters, onScoreUploaded) {
         let scoreRow = {
             playerName: playerName,
-            score: score
+            correctCharacters: correctCharacters
         };
 
         fetch('/api/leader-board', {

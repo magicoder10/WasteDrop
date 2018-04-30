@@ -26,7 +26,7 @@
 }
 
 #start-screen > #buttons > #start-button, #start-screen > #buttons > #credit-button {
-    height : 88px;
+    height : 86px;
     cursor : pointer;
 }
 

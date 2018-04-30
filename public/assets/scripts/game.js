@@ -21,8 +21,14 @@ class WasteDropGame {
             'can-paper-hover',
             'character-cup',
             'character-cup-hover',
-            'character-bag',
-            'character-bag-hover',
+            'character-plastic-bag',
+            'character-plastic-bag-hover',
+            'character-paper-bag',
+            'character-paper-bag-hover',
+            'character-metal-can',
+            'character-metal-can-hover',
+            'character-banana-peel',
+            'character-banana-peel-hover',
             'play-again-icon',
             'close-icon',
             'go-back-icon'
@@ -120,9 +126,24 @@ class WasteDropGame {
                 points: 10
             },
             {
-                name: 'bag',
+                name: 'paper-bag',
                 category: 'paper',
-                points: 15
+                points: 12
+            },
+            {
+                name: 'plastic-bag',
+                category: 'plastic',
+                points: 16
+            },
+            {
+                name: 'metal-can',
+                category: 'metal',
+                points: 14
+            },
+            {
+                name: 'banana-peel',
+                category: 'trash',
+                points: 14
             }
         ];
         let characterConfigIndex = Math.floor(Math.random() * characterConfigs.length);
@@ -199,7 +220,7 @@ class WasteDropGame {
         this._level1Screen = new Level1Screen(this._nextScreenContainer, this._imageAssets, this._audioAssets);
 
         this._points = 0;
-        this._timeRemaining = 30;
+        this._timeRemaining = 120;
 
         this._level1Screen.updatePoints(this._points);
         this._level1Screen.updateTimeRemaining(this._timeRemaining);
